@@ -16,7 +16,7 @@ You can listen in on waiter events and dispatch other actions.  You can add
 custom views to different waiter states,
 as well as add custom actions to the mount and unmount lifecycle events
 
-Below is the full interface for connectRequest, ordered in the sequence that the actions take place
+Below is the full interface for connectWaiter, ordered in the sequence that the actions take place
 
 ```javascript
 import { connectWaiter } from 'redux-waiter'
