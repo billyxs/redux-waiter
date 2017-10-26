@@ -6,7 +6,7 @@
 
 This gives you access to the reducer, constants, actions, and selectors available
 
-## connectRequest
+## connectWaiter
 
 `import { connectWaiter } from 'redux-waiter'`
 
@@ -23,7 +23,7 @@ import { connectWaiter } from 'redux-waiter'
 import MyComponent from 'path/to/MyComponent'
 import notification from 'path/to/notification'
 
-const SearchRequestForm = connectRequest({
+const SearchRequestForm = connectWaiter({
   name: 'my-waiter-name',
   requestCreator: (params, props) => yourAPI.getSomething(params),
 
