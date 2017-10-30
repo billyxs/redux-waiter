@@ -6,6 +6,85 @@
 
 This gives you access to the reducer, constants, actions, and selectors available
 
+
+## Add to your combineReducers()
+
+```
+import { reducer } from 'redux-waiter'
+
+combineReducers{
+  waiter: reducer,
+}
+```
+
+
+## Waiter model description and defaults
+
+```
+{
+  // incremented after each request
+  id: 0,
+
+  // your waiter's name
+  name: null,
+
+  // your request to track
+  requestCreator: null,
+
+  defaultParams: null,
+
+  // the params for your request to use
+  params: null,
+
+  // the promise returned from the requestCreator
+  request: null,
+
+  // the result of the promise
+  response: null,
+
+  // the error if returned from the promise
+  error: null,
+
+  // true if the request is called a second time and isPending
+  isRefreshing: false,
+
+  // true when the request is pending
+  isPending: false,
+
+  // true when the request returns an error
+  isRejected: false,
+
+  // true when the request returns successfully
+  isResolved: false,
+
+  // true if the request resolves or rejects
+  isCompleted: false,
+
+  // true if the request is cancled
+  isCanceled: false,
+
+  // true if the request rejected, and is being called again
+  isRetrying: false,
+
+  // start time of request in milliseconds UTC
+  startTime: null,
+
+  // end time of request in milliseconds UTC
+  endTime: null,
+
+  // difference in milliseconds of start and end times
+  elapsedTime: null,
+
+  // last time the model changed in milliseconds UTC
+  lastModified: null,
+
+  // how many times the request has been called and returned an error
+  // resets after a successful response
+  attempts: 0,
+}
+```
+
+
 ## connectWaiter
 
 `import { connectWaiter } from 'redux-waiter'`
@@ -36,7 +115,6 @@ const SearchRequestForm = connectWaiter({
   // request on mount options
   requestOnMount: true,
   requestOnMountParams: (props) => ({name: 'First', last: 'Last'}),
-  requestOnMountBody: (props) => ({name: 'First', last: 'Last'}),
 
   // on unmount
   onUnMount: (props, dispatch) => {
