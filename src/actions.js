@@ -55,34 +55,36 @@ export const destroyWaiter = name => ({
   },
 })
 
-export const callWaiter = (name, {
+export function callWaiter(name, {
   requestCreator,
   params,
-}) => (dispatch, getState) => {
-  if (requestCreator) {
-    dispatch(prepareWaiter(name, { requestCreator }))
-  }
-  const waiterData = getWaiter(getState(), name)
+}) {
+  return (dispatch, getState) => {
+    if (requestCreator) {
+      dispatch(prepareWaiter(name, { requestCreator }))
+    }
+    const waiterData = getWaiter(getState(), name)
 
   // Check if waiter is currently handling a request
-  if (waiterData.promise && waiterData.isPending) {
-    return waiterData.promise
-  }
+    if (waiterData.promise && waiterData.isPending) {
+      return waiterData.promise
+    }
 
-  if (!waiterData.requestCreator) {
-    throw new Error(`redux-waiter: requestCreator not found for your waiter named ${name}`)
-  }
+    if (!waiterData.requestCreator) {
+      throw new Error(`redux-waiter: requestCreator not found for your waiter named ${name}`)
+    }
 
-  const request = waiterData.requestCreator(params, dispatch)
-  dispatch(initRequest(name, { promise: request, params }))
-  request.then((data) => {
-    dispatch(resolveRequest(name, data))
-  })
+    const request = waiterData.requestCreator(params, dispatch)
+    dispatch(initRequest(name, { promise: request, params }))
+    request.then((data) => {
+      dispatch(resolveRequest(name, data))
+    })
   .catch((error) => {
     dispatch(rejectRequest(name, error))
   })
 
-  return request
+    return request
+  }
 }
 
 export const clearAll = () => ({

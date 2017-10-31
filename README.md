@@ -20,8 +20,9 @@ combineReducers{
 
 ## Waiter model description and defaults
 
-```
-{
+```javascript
+
+const model = {
   // incremented after each request
   id: 0,
 
@@ -117,22 +118,24 @@ const SearchRequestForm = connectWaiter({
   requestOnMountParams: (props) => ({name: 'First', last: 'Last'}),
 
   // on unmount
-  onUnMount: (props, dispatch) => {
-    dispatch(customAction())
+  onUnmount: (waiter, props) => {
+    props.dispatch(customAction())
   },
   clearOnUnmount: true,
 
   // state actions
-  onPending: (waiter, dispatch) => {
+  onPending: (waiter, props) => {
     console.log('onPending - ', waiter)
+    props.dispatch(loadData(waiter.response))
   },
-  onResolve: (waiter, dispatch) => {
+  onResolve: (waiter, props) => {
     console.log('onResolve - ', waiter)
+    props.dispatch(sendError(waiter.error))
   },
-  onReject: (waiter, dispatch) => {
+  onReject: (waiter, props) => {
     console.log('onReject - ', waiter.error)
   },
-  onComplete: (waiter, dispatch) => {
+  onComplete: (waiter, props) => {
     console.log('onComplete - ', waiter)
   },
 
