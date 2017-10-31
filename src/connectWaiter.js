@@ -35,7 +35,7 @@ export default (params) => {
         } = params
 
         if (params.onMount) {
-          params.onMount(this.props, this.props.dispatch)
+          params.onMount(this.props.waiter, this.props)
         }
 
         if (params.clearOnMount) {
@@ -60,7 +60,7 @@ export default (params) => {
 
       componentWillUnmount() {
         if (params.onUnmount) {
-          params.onUnmount(this.props)
+          params.onUnmount(this.props.waiter, this.props)
         }
 
         if (params.clearOnUnmount) {
