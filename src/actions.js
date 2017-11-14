@@ -66,8 +66,8 @@ export function callWaiter(name, {
     const waiterData = getWaiter(getState(), name)
 
   // Check if waiter is currently handling a request
-    if (waiterData.promise && waiterData.isPending) {
-      return waiterData.promise
+    if (waiterData.request && waiterData.isPending) {
+      return waiterData.request
     }
 
     if (!waiterData.requestCreator) {
@@ -75,7 +75,7 @@ export function callWaiter(name, {
     }
 
     const request = waiterData.requestCreator(params, dispatch)
-    dispatch(initRequest(name, { promise: request, params }))
+    dispatch(initRequest(name, { request, params }))
     request.then((data) => {
       dispatch(resolveRequest(name, data))
     })
