@@ -145,3 +145,28 @@ const SearchRequestForm = connectWaiter({
 })(MyComponent)
 
 ```
+
+
+## Example
+
+### Valid Document Link
+
+```javascript
+import React from 'react'
+import axios from 'axios'
+
+import { connectWaiter } from 'redux-waiter'
+
+const UrlLink = connectWaiter({
+  // dynamic waiter name using props
+  name: (props) => `link:${props.url}`,
+  requestCreator: (params) => axios({ url: params.url }),
+  requestOnMountParams: (props) => ({ url: props.url }),
+  pendingView: () => (<span>...</span>),
+  rejectedView: () => (<span>Invalid link</span>),
+})((props) => <a href={props.url}>Click to View</a>)
+
+// Use in your view
+<UrlLink url='https://link.to.pdf' />'
+
+```
