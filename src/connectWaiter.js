@@ -72,7 +72,6 @@ export default (params) => {
         const {
           requestOnMountParams,
           requestCreator,
-          name,
         } = params
 
         const requestParams = {
@@ -80,7 +79,7 @@ export default (params) => {
           params: requestOnMountParams ? requestOnMountParams(props) : null,
         }
 
-        this.props.dispatch(this.props.callWaiter(name, requestParams))
+        this.props.dispatch(this.props.callWaiter(this.props.name, requestParams))
       }
 
       checkEvents(props) {
