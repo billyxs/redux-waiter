@@ -1,6 +1,6 @@
 {
   "name": "redux-waiter",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Generic promise store with redux",
   "main": "lib/index.js",
   "directories": {
