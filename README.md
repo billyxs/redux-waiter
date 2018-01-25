@@ -13,7 +13,7 @@ This gives you access to the reducer, constants, actions, and selectors availabl
 import { reducer } from 'redux-waiter'
 
 combineReducers{
-  waiter: reducer,
+  waiter: reducer
 }
 ```
 
@@ -265,7 +265,8 @@ import { connectWaiter } from 'redux-waiter'
 const UrlLink = connectWaiter({
   // dynamic waiter name using props
   name: (props) => `link:${props.url}`,
-  requestCreator: (params, props) => axios({ url: props.url }),
+  requestCreator: (params) => httpClient({ url: params.url }),
+  requestOnMountParams: (props) => ({ url: props.url }),
 
   // alternate views for the Promise lifecycle
   pendingView: () => (<span>...</span>),
