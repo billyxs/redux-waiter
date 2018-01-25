@@ -148,6 +148,108 @@ const SearchRequestForm = connectWaiter({
 
 ```
 
+## Actions
+
+### callWaiter(waiterName, { params, requestCreator })
+
+The call action will invoke the requestCreator with the supplied params and
+store all waiter processes to the waiterName given.
+
+```
+import { callWaiter } from 'redux-waiter'
+
+dispatch(
+  callWaiter('get-toy', {
+    { id: '1'},
+    requestCreator: (params) => getToyPromise(params.id)
+  })
+)
+```
+
+### prepareWaiter(waiterName, { params, requestCreator })
+
+Prepare is the same as callWaiter, but it only store up params and the request
+creator to the waiterName. It will not invoke the requestCreator until
+callWaiter(waiterName) is dispatched
+
+```
+import { prepareWaiter } from 'redux-waiter'
+
+dispatch(
+  prepareWaiter('get-toy', {
+    { id: '1'},
+    requestCreator: (params) => getToyPromise(params.id)
+  })
+)
+
+// then somewhere else you can call it
+dispatch(callWaiter('get-toy'))
+```
+
+### clearWaiter(waiterName)
+
+Clear will reset the waiter as if it was never called. This removes all
+params, response, and error data. The waiter stays in the store and can be
+used again.
+
+```javascript
+import { clearWaiter } from 'redux-waiter'
+
+// In you redux environment
+dispatch(clearWaiter('waiter-name'))
+```
+
+
+### destroyWaiter(waiterName)
+
+Destroy will remove the waiter from the store. It will not longer be
+accessible unless initialized again.
+
+```javascript
+import { destroyWaiter } from 'redux-waiter'
+
+// In you redux environment
+dispatch(destroyWaiter('waiter-name'))
+```
+
+## Selectors
+
+### getWaiter(state, waiterName)
+
+Get all the waiter data from the store by it's name.
+
+```javascript
+import { getWaiter } from 'redux-waiter'
+
+// In your mapStateToProps somewhere
+(state) => getWaiter(state, 'get-toy',)
+
+```
+### getWaiterResponse(state, waiterName)
+
+Get only the response of the promise by the waiter name. Returns null if no
+response has been given.
+
+```javascript
+import { getWaiterResponse } from 'redux-waiter'
+
+// In your mapStateToProps somewhere
+(state) => getWaiterResponse(state, 'get-toy',)
+
+```
+
+### getWaiterError(state, waiterName)
+
+Get only the error of the promise by the waiter name. Returns null if no error
+was given.
+
+```javascript
+import { getWaiterError } from 'redux-waiter'
+
+// In your mapStateToProps somewhere
+(state) => getWaiterError(state, 'get-toy',)
+
+```
 
 ## Example
 
