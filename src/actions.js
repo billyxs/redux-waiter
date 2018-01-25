@@ -59,7 +59,7 @@ export function callWaiter(name, {
   requestCreator,
   params,
 }) {
-  return (dispatch, getState) => {
+  return function (dispatch, getState) {
     if (requestCreator) {
       dispatch(prepareWaiter(name, { requestCreator }))
     }
@@ -78,10 +78,12 @@ export function callWaiter(name, {
     dispatch(initRequest(name, { request, params }))
     request.then((data) => {
       dispatch(resolveRequest(name, data))
+      return getWaiter(getState(), name)
     })
-  .catch((error) => {
-    dispatch(rejectRequest(name, error))
-  })
+    .catch((error) => {
+      dispatch(rejectRequest(name, error))
+      return getWaiter(getState(), name)
+    })
 
     return request
   }
