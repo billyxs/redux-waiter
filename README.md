@@ -9,7 +9,7 @@ This gives you access to the reducer, constants, actions, and selectors availabl
 
 ## Add to your combineReducers()
 
-```
+```javascript
 import { reducer } from 'redux-waiter'
 
 combineReducers{
@@ -19,6 +19,8 @@ combineReducers{
 
 
 ## Waiter model description and defaults
+
+Each waiter initialized will have these properties.
 
 ```javascript
 
