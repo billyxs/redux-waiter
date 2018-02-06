@@ -2,9 +2,12 @@ import * as actions from './actions'
 import actionTypes from './actionTypes'
 import * as constants from './constants'
 import * as selectors from './selectors'
-import reducer from './reducer'
+import _reducer from './reducer'
 
 export connectWaiter from './connectWaiter'
+
+// reducer
+export const reducer = _reducer
 
 // selectors
 export const getWaiter = selectors.getWaiter
