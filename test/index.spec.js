@@ -1,4 +1,5 @@
 import reduxWaiter, {
+  reducer,
   getWaiter,
   getWaiterResponse,
   getWaiterError,
@@ -8,13 +9,16 @@ import reduxWaiter, {
   destroyWaiter,
 } from '../src'
 
-const {
-  reducer,
-} = reduxWaiter
 
 describe('(Redux Waiter)', () => {
   describe('(Reducer)', () => {
     it('Should be exported as a function.', () => {
+      expect(reduxWaiter.reducer).to.be.a('function')
+    })
+  })
+
+  describe('(Reducer - named export)', () => {
+    it('Should be a named export as a function.', () => {
       expect(reducer).to.be.a('function')
     })
   })
