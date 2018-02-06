@@ -10,10 +10,10 @@ This gives you access to the reducer, constants, actions, and selectors availabl
 ## Add to your combineReducers()
 
 ```javascript
-import { reducer } from 'redux-waiter'
+import waiter from 'redux-waiter'
 
 combineReducers{
-  waiter: reducer
+  reduxWaiter: waiter.reducer
 }
 ```
 
