@@ -1,20 +1,9 @@
-
-describe('connectWaiter', () => {
-  it('should be...', () => {
-    expect(true).toBe(true)
-  })
-})
-
-/* import React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store'
+import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux'
-import { shallow } from 'enzyme'
-
-import reducer from '../src/reducer'
-import connectWaiter from '../src/connectWaiter'
+import { connectWaiter, reducer } from '../src'
 
 import REDUX_MOUNT_POINT from './redux-mount-point'
 
@@ -29,14 +18,14 @@ const store = createStore(
   {},
   compose(
     applyMiddleware(...middleware),
-  )
+  ),
 )
 
 function mountComponent(Component) {
   return mount(
     <Provider store={store}>
       <Component />
-    </Provider>
+    </Provider>,
   )
 }
 
@@ -44,72 +33,67 @@ function getWaiterProps(wrapper) {
   return wrapper.find('WaiterEvent').props()
 }
 
-describe('(Redux Waiter) Connect Waiter', function () {
-  describe('(export)', function() {
-    it('Should be exported as a function.', function () {
-      expect(connectWaiter).to.be.a('function')
+describe('(Redux Waiter) Connect Waiter', () => {
+  describe('(export)', () => {
+    it('Should be exported as a function.', () => {
+      expect(typeof connectWaiter).toBe('function')
     })
   })
-
-  describe('should resolve waiter view', function() {
+  describe('should resolve waiter view', () => {
     const MOCK_RESULT = {
-      dones: true
+      dones: true,
     }
 
     const Component = connectWaiter({
       name: 'mywaiter',
-      requestCreator: () => new Promise((resolve, reject) => {
-        setTimeout(() => resolve(MOCK_RESULT), 1500)
+      requestCreator: () => new Promise((resolve) => {
+        setTimeout(() => resolve(MOCK_RESULT), 1000)
       }),
       requestOnMountParams: () => ({ dones: true }),
-    })((props) => (
+    })(() => (
       <div>Hello</div>
     ))
 
-    it('Should render with pending state', function(done) {
-      this.timeout(1000)
+    it('Should render with pending state', async () => {
+      expect.assertions(9)
       const wrapper = mountComponent(Component)
-      setTimeout(() => {
-        const props = getWaiterProps(wrapper)
-        expect(props.response).to.equal(null)
-        expect(props.error).to.equal(null)
+      await new Promise(resolve => setTimeout(resolve, 10))
+      const { waiter } = getWaiterProps(wrapper)
+      expect(waiter.response).toBe(null)
+      expect(waiter.error).toBe(null)
 
-        expect(props.isPending).to.equal(true)
-        expect(props.isCompleted).to.equal(false)
-        expect(props.isResolved).to.equal(false)
-        expect(props.isRejected).to.equal(false)
-        expect(props.isCanceled).to.equal(false)
-        expect(props.isRefreshing).to.equal(false)
-        expect(props.isRetrying).to.equal(false)
-        done()
-      }, 10)
+      expect(waiter.isPending).toBe(true)
+      expect(waiter.isCompleted).toBe(false)
+      expect(waiter.isResolved).toBe(false)
+      expect(waiter.isRejected).toBe(false)
+      expect(waiter.isCanceled).toBe(false)
+      expect(waiter.isRefreshing).toBe(false)
+      expect(waiter.isRetrying).toBe(false)
     })
 
-    it('Should render with resolved state', function(done) {
-      this.timeout(2000)
+    it('Should render with resolved state', async () => {
+      expect.assertions(9)
       const wrapper = mountComponent(Component)
-      setTimeout(() => {
-        const props = getWaiterProps(wrapper)
 
-        expect(props.response).to.equal(MOCK_RESULT)
-        expect(props.error).to.equal(null)
+      await new Promise(resolve => setTimeout(resolve, 1100))
+      const { waiter } = getWaiterProps(wrapper)
 
-        expect(props.isPending).to.equal(false)
-        expect(props.isCompleted).to.equal(true)
-        expect(props.isResolved).to.equal(true)
-        expect(props.isRejected).to.equal(false)
-        expect(props.isCanceled).to.equal(false)
-        expect(props.isRefreshing).to.equal(false)
-        expect(props.isRetrying).to.equal(false)
-        done()
-      }, 1600)
+      expect(waiter.response).toBe(MOCK_RESULT)
+      expect(waiter.error).toBe(null)
+
+      expect(waiter.isPending).toBe(false)
+      expect(waiter.isCompleted).toBe(true)
+      expect(waiter.isResolved).toBe(true)
+      expect(waiter.isRejected).toBe(false)
+      expect(waiter.isCanceled).toBe(false)
+      expect(waiter.isRefreshing).toBe(false)
+      expect(waiter.isRetrying).toBe(false)
     })
-
   })
 
-  describe('should reject waiter view', function() {
+  describe('should reject waiter view', () => {
     const MOCK_ERROR = {
-      message: 'ERROR MESSAGE'
+      message: 'ERROR MESSAGE',
     }
 
     const Component = connectWaiter({
@@ -118,49 +102,47 @@ describe('(Redux Waiter) Connect Waiter', function () {
         setTimeout(() => reject(MOCK_ERROR), 1500)
       }),
       requestOnMount: true,
-    })((props) => (
+    })(() => (
       <div>Hello</div>
     ))
 
-    it('Should render with pending state', function(done) {
-      this.timeout(1000)
+    it('Should render with pending state', async () => {
+      expect.assertions(9)
       const wrapper = mountComponent(Component)
-      setTimeout(() => {
-        const props = getWaiterProps(wrapper)
-        expect(props.response).to.equal(null)
-        expect(props.error).to.equal(null)
 
-        expect(props.isPending).to.equal(true)
-        expect(props.isCompleted).to.equal(false)
-        expect(props.isResolved).to.equal(false)
-        expect(props.isRejected).to.equal(false)
-        expect(props.isCanceled).to.equal(false)
-        expect(props.isRefreshing).to.equal(false)
-        expect(props.isRetrying).to.equal(false)
-        done()
-      }, 10)
+      await new Promise(resolve => setTimeout(resolve, 10))
+      const { waiter } = getWaiterProps(wrapper)
+
+      expect(waiter.response).toBe(null)
+      expect(waiter.error).toBe(null)
+
+      expect(waiter.isPending).toBe(true)
+      expect(waiter.isCompleted).toBe(false)
+      expect(waiter.isResolved).toBe(false)
+      expect(waiter.isRejected).toBe(false)
+      expect(waiter.isCanceled).toBe(false)
+      expect(waiter.isRefreshing).toBe(false)
+      expect(waiter.isRetrying).toBe(false)
     })
 
-    it('Should render with rejected state', function(done) {
-      this.timeout(2000)
+    it('Should render with rejected state', async () => {
+      expect.assertions(9)
       const wrapper = mountComponent(Component)
-      setTimeout(() => {
-        const props = getWaiterProps(wrapper)
+      await new Promise(resolve => setTimeout(resolve, 1600))
 
-        expect(props.response).to.equal(null)
-        expect(props.error).to.equal(MOCK_ERROR)
+      const { waiter } = getWaiterProps(wrapper)
 
-        expect(props.isPending).to.equal(false)
-        expect(props.isCompleted).to.equal(true)
-        expect(props.isResolved).to.equal(false)
-        expect(props.isRejected).to.equal(true)
-        expect(props.isCanceled).to.equal(false)
-        expect(props.isRefreshing).to.equal(false)
-        expect(props.isRetrying).to.equal(false)
-        done()
-      }, 1600)
+      expect(waiter.response).toBe(null)
+      expect(waiter.error).toBe(MOCK_ERROR)
+
+      expect(waiter.isPending).toBe(false)
+      expect(waiter.isCompleted).toBe(true)
+      expect(waiter.isResolved).toBe(false)
+      expect(waiter.isRejected).toBe(true)
+      expect(waiter.isCanceled).toBe(false)
+      expect(waiter.isRefreshing).toBe(false)
+      expect(waiter.isRetrying).toBe(false)
     })
   })
 })
 
-*/
