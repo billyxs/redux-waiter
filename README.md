@@ -117,7 +117,13 @@ const SearchRequestForm = connectWaiter({
 
   // request on mount options
   requestOnMount: true,
+
+  // pass parameters to the request creator based on props
   requestOnMountParams: (props) => ({name: 'First', last: 'Last'}),
+
+  // like requestOnMountParams, but used to initialize the call to
+  // the waiter again on props change
+  requestOnPropsChange: (props) => ({name: 'First', last: 'Last'}),
 
   // on unmount
   onUnmount: (waiter, props) => {
