@@ -54,7 +54,7 @@ export default (params) => {
 
         // recall the request if requestOnPropsChange allows
         if (params.requestOnPropsChange && params.requestOnPropsChange(this.props, nextProps)) {
-          this.initWaiter(nextProps)
+          this.initRequest(nextProps)
         }
       }
 
