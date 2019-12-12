@@ -40,7 +40,8 @@
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "cross-env": "^4.0.0",
-    "enzyme": "^2.9.1",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
     "eslint": "^3.6.0",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-flowtype": "^2.32.1",
@@ -55,8 +56,8 @@
     "jsdom": "^11.2.0",
     "lodash": "^4.17.4",
     "prop-types": "*",
-    "react": "^15.6.0",
-    "react-dom": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-redux": "*",
     "react-test-renderer": "^16.2.0",
     "redux": "^3.6.0",
@@ -76,6 +77,10 @@
     "build": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --source-maps",
     "flow": "flow",
     "prepublish": "npm run clean && npm run lint && npm run build && npm run test"
+  },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
   },
   "license": "MIT"
 }
