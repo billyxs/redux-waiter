@@ -1,5 +1,6 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
+import enzyme, { mount } from 'enzyme'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux'
@@ -7,6 +8,7 @@ import { connectWaiter, reducer } from '../src'
 
 import REDUX_MOUNT_POINT from './redux-mount-point'
 
+enzyme.configure({ adapter: new Adapter() })
 const middleware = [thunk.withExtraArgument({})]
 
 const initialState = combineReducers({
@@ -49,7 +51,7 @@ describe('(Redux Waiter) Connect Waiter', () => {
       requestCreator: () => new Promise((resolve) => {
         setTimeout(() => resolve(MOCK_RESULT), 1000)
       }),
-      requestOnMountParams: () => ({ dones: true }),
+      requestOnMountParams: () => (MOCK_RESULT),
     })(() => (
       <div>Hello</div>
     ))
