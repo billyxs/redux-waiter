@@ -18,14 +18,14 @@
   ],
   "author": "Billy Montgomery billy.montgomery@hixme.com",
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "reselect": "*"
   },
   "peerDependencies": {
     "prop-types": "*",
     "react": "*",
     "react-redux": "*",
-    "redux-thunk": "*",
-    "reselect": "*"
+    "redux-thunk": "*"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
