@@ -28,7 +28,7 @@ export default (params) => {
         isRejected: false,
       }
 
-      componentWillMount() {
+      componentDidMount() {
         const {
           requestOnMount,
           requestOnMountParams,
@@ -49,12 +49,12 @@ export default (params) => {
         this.checkEvents()
       }
 
-      componentWillReceiveProps(nextProps) {
-        this.checkEvents(nextProps)
+      componentDidUpdate(prevProps) {
+        this.checkEvents(this.props)
 
         // recall the request if requestOnPropsChange allows
-        if (params.requestOnPropsChange && params.requestOnPropsChange(this.props, nextProps)) {
-          this.initRequest(nextProps)
+        if (params.requestOnPropsChange && params.requestOnPropsChange(this.props, prevProps)) {
+          this.initRequest(this.props)
         }
       }
 
