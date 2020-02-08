@@ -73,11 +73,12 @@ describe('(Redux Waiter) Connect Waiter', () => {
       expect(waiter.isRetrying).toBe(false)
     })
 
-    it.skip('Should render with resolved state', async () => {
+    it('Should render with resolved state', async () => {
       expect.assertions(9)
       const wrapper = mountComponent(Component)
 
       await new Promise(resolve => setTimeout(resolve, 1100))
+      wrapper.update()
       const { waiter } = getWaiterProps(wrapper)
 
       expect(waiter.response).toBe(MOCK_RESULT)
@@ -127,11 +128,11 @@ describe('(Redux Waiter) Connect Waiter', () => {
       expect(waiter.isRetrying).toBe(false)
     })
 
-    it.skip('Should render with rejected state', async () => {
+    it('Should render with rejected state', async () => {
       expect.assertions(9)
       const wrapper = mountComponent(Component)
       await new Promise(resolve => setTimeout(resolve, 1600))
-
+      wrapper.update()
       const { waiter } = getWaiterProps(wrapper)
 
       expect(waiter.response).toBe(null)
