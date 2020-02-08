@@ -165,16 +165,12 @@ describe('(Redux Waiter) Connect Waiter', () => {
       )
     })
 
-    it('Should render with pending state', async () => {
-    })
-
     it('Should not reject request with connectWaiter inner component error', async () => {
       expect.assertions(9)
       const wrapper = mountComponent(Component)
 
       const error = new Error('test');
       wrapper.find('Component').simulateError(error);
-      wrapper.update()
 
       // component should be stable when an error is thrown inside
       await new Promise(resolve => setTimeout(resolve, 1600))
