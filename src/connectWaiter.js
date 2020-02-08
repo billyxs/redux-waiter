@@ -69,7 +69,7 @@ export default (params) => {
       }
 
       componentDidCatch(error) {
-        console.log('redux-waiter: We caught an error in your component. It was caught to prevent the waiter from rejecting your request.')
+        console.warn('redux-waiter: We caught an error in your component. It was caught to prevent the waiter from rejecting your request.')
       }
 
       initRequest(props) {
