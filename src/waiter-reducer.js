@@ -133,7 +133,6 @@ const reducerMap = {
     lastModified: null,
     attempts: 0,
   }),
-  [t.DESTROY]: () => waiterModel,
 }
 
 export default (state = waiterModel, action) => {
