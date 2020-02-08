@@ -46,6 +46,8 @@ const reducerMap = {
       name,
     } = payload
 
+    // If we alredy have a response
+    // we are in refresh mode
     const isRefreshing = !!state.response
 
     const id = state.id + 1
@@ -74,6 +76,7 @@ const reducerMap = {
   [t.RESOLVE]: (state, payload) => ({
     ...state,
     response: payload.response,
+    isRefreshing: false,
     isPending: false,
     isResolved: true,
     isRejected: false,
@@ -87,6 +90,7 @@ const reducerMap = {
   [t.REJECT]: (state, payload) => ({
     ...state,
     response: null,
+    isRefreshing: false,
     isPending: false,
     isResolved: false,
     isRejected: true,
@@ -101,6 +105,7 @@ const reducerMap = {
     ...state,
     request: null,
     response: null,
+    isRefreshing: false,
     isPending: false,
     isResolved: false,
     isRejected: false,
