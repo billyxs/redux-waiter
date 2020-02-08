@@ -5,7 +5,6 @@ const initialState = {}
 
 const reducerMap = {
   // all the waiters
-  [t.RESET_ALL]: () => initialState,
   [t.CLEAR_ALL]: state => Object.values(state).reduce((acc, curr) => {
     // eslint-disable-next-line no-param-reassign
     acc[curr.name] = waiter(state[curr.name], { type: t.CLEAR })
