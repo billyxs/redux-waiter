@@ -147,5 +147,52 @@ describe('(Redux Waiter) Connect Waiter', () => {
       expect(waiter.isRetrying).toBe(false)
     })
   })
+
+  describe('should catch error', () => {
+    const MOCK_RESULT = {
+      dones: true,
+    }
+
+    const Component = connectWaiter({
+      name: 'mywaiter',
+      requestCreator: () => new Promise((resolve) => {
+        setTimeout(() => resolve(MOCK_RESULT), 1000)
+      }),
+      requestOnMountParams: () => (MOCK_RESULT),
+    })(function Component() {
+      return (
+        <div>Hello</div>
+      )
+    })
+
+    it('Should render with pending state', async () => {
+    })
+
+    it('Should not reject request with connectWaiter inner component error', async () => {
+      expect.assertions(9)
+      const wrapper = mountComponent(Component)
+
+      const error = new Error('test');
+      wrapper.find('Component').simulateError(error);
+      wrapper.update()
+
+      // component should be stable when an error is thrown inside
+      await new Promise(resolve => setTimeout(resolve, 1600))
+      wrapper.update()
+
+      const { waiter } = getWaiterProps(wrapper)
+
+      expect(waiter.response).toBe(MOCK_RESULT)
+      expect(waiter.error).toBe(null)
+
+      expect(waiter.isPending).toBe(false)
+      expect(waiter.isCompleted).toBe(true)
+      expect(waiter.isResolved).toBe(true)
+      expect(waiter.isRejected).toBe(false)
+      expect(waiter.isCanceled).toBe(false)
+      expect(waiter.isRefreshing).toBe(false)
+      expect(waiter.isRetrying).toBe(false)
+    })
+  })
 })
 
