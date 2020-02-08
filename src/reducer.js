@@ -5,7 +5,6 @@ const initialState = {}
 
 const reducerMap = {
   // all the waiters
-  [t.RESET_ALL]: () => initialState,
   [t.CLEAR_ALL]: state => Object.values(state).reduce((acc, curr) => {
     // eslint-disable-next-line no-param-reassign
     acc[curr.name] = waiter(state[curr.name], { type: t.CLEAR })
@@ -37,10 +36,12 @@ const reducerMap = {
     ...state,
     [payload.name]: waiter(state[payload.name], { type: t.CLEAR, payload }),
   }),
-  [t.DESTROY]: (state, payload) => ({
-    ...state,
-    [payload.name]: waiter(state[payload.name], { type: t.RESET, payload }),
-  }),
+  [t.DESTROY]: (state, payload) => Object.keys(state).reduce((acc, curr) => {
+    if (curr === payload.name) {
+      return acc
+    }
+    return { ...acc, [curr]: state[curr] }
+  }, {}),
   [t.CANCEL_ALL]: state => state.map(w => waiter(w, { type: t.CANCEL })),
   [t.DESTROY_ALL]: () => initialState,
 }
