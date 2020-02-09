@@ -1,4 +1,8 @@
+// For componentDidCatch as we just want to warn of an issue
+// for a user's wrapped component when an erro is thrown
+/* eslint-disable class-methods-use-this */
 /* eslint-disable no-console */
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -68,7 +72,7 @@ export default (params) => {
         }
       }
 
-      componentDidCatch(error) {
+      componentDidCatch() {
         console.warn('redux-waiter: We caught an error in your component. It was caught to prevent the waiter from rejecting your request.')
       }
 
