@@ -169,10 +169,10 @@ describe('(Redux Waiter) Connect Waiter', () => {
       expect.assertions(9)
       const wrapper = mountComponent(Component)
 
+      // component should be stable when an error is thrown inside
       const error = new Error('test');
       wrapper.find('Component').simulateError(error);
 
-      // component should be stable when an error is thrown inside
       await new Promise(resolve => setTimeout(resolve, 1600))
       wrapper.update()
 
