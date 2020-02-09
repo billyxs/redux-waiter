@@ -1,5 +1,5 @@
 // For componentDidCatch as we just want to warn of an issue
-// for a user's wrapped component when an erro is thrown
+// for a user's wrapped component when an error is thrown
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-console */
 
