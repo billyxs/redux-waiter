@@ -12,10 +12,20 @@ This gives you access to the reducer, constants, actions, and selectors availabl
 ```javascript
 import { reducer } from 'redux-waiter'
 
-combineReducers{
+const initialState = combineReducers({
   waiter: reducer
-}
+})
+
+const store = createStore(
+  initialState,
+  {},
+  compose(
+    applyMiddleware(...[thunk]),
+  ),
+)
 ```
+
+**NOTE:** Ensure you have redux-thunk configured as middleware in your store implementation
 
 
 ## Waiter model description and defaults
@@ -151,7 +161,6 @@ const SearchRequestForm = connectWaiter({
   pendingView: LoadingView,
   rejectedView: FailureView
 })(MyComponent)
-
 ```
 
 ## Actions
@@ -161,7 +170,7 @@ const SearchRequestForm = connectWaiter({
 The call action will invoke the requestCreator with the supplied params and
 store all waiter processes to the waiterName given.
 
-```
+```javascript
 import { callWaiter } from 'redux-waiter'
 
 dispatch(
@@ -241,7 +250,6 @@ import { getWaiterResponse } from 'redux-waiter'
 
 // In your mapStateToProps somewhere
 (state) => getWaiterResponse(state, 'get-toy',)
-
 ```
 
 ### getWaiterError(state, waiterName)
@@ -254,7 +262,6 @@ import { getWaiterError } from 'redux-waiter'
 
 // In your mapStateToProps somewhere
 (state) => getWaiterError(state, 'get-toy',)
-
 ```
 
 ## Example
@@ -278,7 +285,6 @@ const UrlLink = connectWaiter({
   pendingView: () => (<span>...</span>),
   rejectedView: () => (<span>Invalid link</span>),
 })((props) => <a href={props.url}>Click to View</a>)
-
 ```
 
 Implement your component in the JSX
@@ -287,3 +293,7 @@ Implement your component in the JSX
 <UrlLink url='https://link.to.pdf' />'
 ...
 ```
+
+## Dependencies
+
+Due to the asynchronous nature of this library, redux-waiter requires that you have redux-thunk configured as middleware for your store.
