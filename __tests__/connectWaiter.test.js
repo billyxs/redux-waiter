@@ -7,14 +7,14 @@ import { applyMiddleware, compose, createStore, combineReducers } from 'redux'
 import reduxWaiter, { connectWaiter, reducer } from '../src'
 
 const {
-  constants: { NAME: REDUX_MOUNT_POINT },
+  constants: { NAME },
 } = reduxWaiter
 
 enzyme.configure({ adapter: new Adapter() })
 const middleware = [thunk.withExtraArgument({})]
 
 const initialState = combineReducers({
-  [REDUX_MOUNT_POINT]: reducer,
+  [NAME]: reducer,
 })
 
 const store = createStore(

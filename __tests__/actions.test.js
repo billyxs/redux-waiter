@@ -6,10 +6,9 @@ const {
   actionTypes,
 } = reduxWaiter
 
-const { NAME: REDUX_MOUNT_POINT } = constants
-
+const { NAME } = constants
 const TEST_NAME = 'testName'
-const ACTION_TYPE_PREFIX = `@${REDUX_MOUNT_POINT}/`
+const ACTION_TYPE_PREFIX = `@${NAME}/`
 
 describe('(Redux Waiter) Actions', () => {
   describe('(Actions) request lifecycle', () => {
