@@ -44,7 +44,12 @@ describe('(Redux Waiter)', () => {
       expect(state.isRejected).toBe(false)
       expect(state.isCompleted).toBe(false)
       expect(state.isCanceled).toBe(false)
+      expect(state.lastModified).toBe(null)
+      expect(state.startTime).toBe(null)
+      expect(state.endTime).toBe(null)
+      expect(state.elapsedTime).toBe(null)
     })
+
   })
 
   describe('(Action) initRequest', () => {
@@ -53,6 +58,13 @@ describe('(Redux Waiter)', () => {
 
     it(`Should change state name from empty to ${TEST_NAME}.`, () => {
       expect(state.name).toBe(TEST_NAME)
+    })
+
+    it('Should update timestamps - startTime, lastModified', () => {
+      expect(typeof state.lastModified).toBe('number')
+      expect(typeof state.startTime).toBe('number')
+      expect(state.endTime).toBe(null)
+      expect(state.elapsedTime).toBe(null)
     })
 
     it('Should change state isPending from false to true.', () => {
@@ -80,6 +92,13 @@ describe('(Redux Waiter)', () => {
       expect(state.response).toBe(REQUEST_PAYLOAD)
     })
 
+    it('Should update timestamps - endTime, elapsedTime, lastModified', () => {
+      expect(state.startTime).toBe(null)
+      expect(typeof state.lastModified).toBe('number')
+      expect(typeof state.endTime).toBe('number')
+      expect(typeof state.elapsedTime).toBe('number')
+    })
+
     it('Should keep state - error, isPending, isRejected, isCompleted.', () => {
       expect(state.error).toBe(null)
       expect(state.isPending).toBe(false)
@@ -99,6 +118,13 @@ describe('(Redux Waiter)', () => {
 
     it('Should change state error from null to an error object.', () => {
       // expect(state.error).to.have.property('statusText', REQUEST_ERROR.statusText)
+    })
+
+    it('Should update timestamps - endTime, elapsedTime, lastModified', () => {
+      expect(state.startTime).toBe(null)
+      expect(typeof state.lastModified).toBe('number')
+      expect(typeof state.endTime).toBe('number')
+      expect(typeof state.elapsedTime).toBe('number')
     })
 
     it('Should keep state - response, isPending, isResolved, isCompleted.', () => {
