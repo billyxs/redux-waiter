@@ -70,7 +70,7 @@ const reducerMap = {
       isRetrying: false,
 
       startTime: getTime(),
-      lastModified: new Date(),
+      lastModified: getTime(),
     }
   },
   [t.RESOLVE]: (state, payload) => ({
@@ -85,7 +85,7 @@ const reducerMap = {
     error: null,
     endTime: getTime(),
     elapsedTime: getTime() - state.startTime,
-    lastModified: new Date(),
+    lastModified: getTime(),
   }),
   [t.REJECT]: (state, payload) => ({
     ...state,
@@ -99,7 +99,7 @@ const reducerMap = {
     error: payload.error,
     endTime: getTime(),
     elapsedTime: getTime() - state.startTime,
-    lastModified: new Date(),
+    lastModified: getTime(),
   }),
   [t.CANCEL]: state => ({
     ...state,
@@ -113,7 +113,7 @@ const reducerMap = {
     isCanceled: true,
     endTime: getTime(),
     elapsedTime: getTime() - state.startTime,
-    lastModified: new Date(),
+    lastModified: getTime(),
   }),
   [t.CLEAR]: state => ({
     ...state,
