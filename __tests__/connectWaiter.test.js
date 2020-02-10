@@ -57,7 +57,7 @@ describe('(Redux Waiter) Connect Waiter', () => {
     ))
 
     it('Should render with pending state', async () => {
-      expect.assertions(9)
+      expect.assertions(13)
       const wrapper = mountComponent(Component)
       await new Promise(resolve => setTimeout(resolve, 10))
       const { waiter } = getWaiterProps(wrapper)
@@ -71,10 +71,15 @@ describe('(Redux Waiter) Connect Waiter', () => {
       expect(waiter.isCanceled).toBe(false)
       expect(waiter.isRefreshing).toBe(false)
       expect(waiter.isRetrying).toBe(false)
+
+      expect(typeof waiter.startTime).toBe('number')
+      expect(typeof waiter.lastModified).toBe('number')
+      expect(waiter.endTime).toBe(null)
+      expect(waiter.elapsedTime).toBe(null)
     })
 
     it('Should render with resolved state', async () => {
-      expect.assertions(9)
+      expect.assertions(14)
       const wrapper = mountComponent(Component)
 
       await new Promise(resolve => setTimeout(resolve, 1100))
@@ -91,6 +96,12 @@ describe('(Redux Waiter) Connect Waiter', () => {
       expect(waiter.isCanceled).toBe(false)
       expect(waiter.isRefreshing).toBe(false)
       expect(waiter.isRetrying).toBe(false)
+
+      expect(typeof waiter.startTime).toBe('number')
+      expect(typeof waiter.lastModified).toBe('number')
+      expect(typeof waiter.endTime).toBe('number')
+      expect(typeof waiter.elapsedTime).toBe('number')
+      expect(waiter.startTime < waiter.endTime).toBe(true)
     })
   })
 
@@ -110,7 +121,7 @@ describe('(Redux Waiter) Connect Waiter', () => {
     ))
 
     it('Should render with pending state', async () => {
-      expect.assertions(9)
+      expect.assertions(13)
       const wrapper = mountComponent(Component)
 
       await new Promise(resolve => setTimeout(resolve, 10))
@@ -126,10 +137,15 @@ describe('(Redux Waiter) Connect Waiter', () => {
       expect(waiter.isCanceled).toBe(false)
       expect(waiter.isRefreshing).toBe(false)
       expect(waiter.isRetrying).toBe(false)
+
+      expect(typeof waiter.startTime).toBe('number')
+      expect(typeof waiter.lastModified).toBe('number')
+      expect(waiter.endTime).toBe(null)
+      expect(waiter.elapsedTime).toBe(null)
     })
 
     it('Should render with rejected state', async () => {
-      expect.assertions(9)
+      expect.assertions(14)
       const wrapper = mountComponent(Component)
       await new Promise(resolve => setTimeout(resolve, 1600))
       wrapper.update()
@@ -145,6 +161,12 @@ describe('(Redux Waiter) Connect Waiter', () => {
       expect(waiter.isCanceled).toBe(false)
       expect(waiter.isRefreshing).toBe(false)
       expect(waiter.isRetrying).toBe(false)
+
+      expect(typeof waiter.startTime).toBe('number')
+      expect(typeof waiter.lastModified).toBe('number')
+      expect(typeof waiter.endTime).toBe('number')
+      expect(typeof waiter.elapsedTime).toBe('number')
+      expect(waiter.startTime < waiter.endTime).toBe(true)
     })
   })
 
@@ -166,7 +188,7 @@ describe('(Redux Waiter) Connect Waiter', () => {
     })
 
     it('Should not reject request with connectWaiter inner component error', async () => {
-      expect.assertions(9)
+      expect.assertions(14)
       const wrapper = mountComponent(Component)
 
       // component should be stable when an error is thrown inside
@@ -188,6 +210,12 @@ describe('(Redux Waiter) Connect Waiter', () => {
       expect(waiter.isCanceled).toBe(false)
       expect(waiter.isRefreshing).toBe(false)
       expect(waiter.isRetrying).toBe(false)
+
+      expect(typeof waiter.startTime).toBe('number')
+      expect(typeof waiter.lastModified).toBe('number')
+      expect(typeof waiter.endTime).toBe('number')
+      expect(typeof waiter.elapsedTime).toBe('number')
+      expect(waiter.startTime < waiter.endTime).toBe(true)
     })
   })
 })

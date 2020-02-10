@@ -63,22 +63,22 @@ const model = {
   // true if the request resolves or rejects
   isCompleted: false,
 
-  // true if the request is cancled
+  // true if the request is canceled
   isCanceled: false,
 
   // true if the request rejected, and is being called again
   isRetrying: false,
 
-  // start time of request in milliseconds UTC
+  // start time of request in milliseconds
   startTime: null,
 
-  // end time of request in milliseconds UTC
+  // end time of request in milliseconds
   endTime: null,
 
   // difference in milliseconds of start and end times
   elapsedTime: null,
 
-  // last time the model changed in milliseconds UTC
+  // last time the model changed in milliseconds
   lastModified: null,
 
   // how many times the request has been called and returned an error
