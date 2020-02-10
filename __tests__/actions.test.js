@@ -1,12 +1,14 @@
 import reduxWaiter from '../src'
-import REDUX_MOUNT_POINT from './redux-mount-point'
 
 const {
   actions,
-  actionTypes,
+  constants,
+  // actionTypes,
 } = reduxWaiter
 
-const TEST_NAME = 'testName'
+const { NAME: REDUX_MOUNT_POINT } = constants
+
+// const TEST_NAME = 'testName'
 const ACTION_TYPE_PREFIX = `@${REDUX_MOUNT_POINT}/`
 
 describe('(Redux Waiter) Actions', () => {

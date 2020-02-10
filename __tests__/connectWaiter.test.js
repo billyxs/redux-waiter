@@ -4,9 +4,11 @@ import enzyme, { mount } from 'enzyme'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux'
-import { connectWaiter, reducer } from '../src'
+import reduxWaiter, { connectWaiter, reducer } from '../src'
 
-import REDUX_MOUNT_POINT from './redux-mount-point'
+const {
+  constants: { NAME: REDUX_MOUNT_POINT },
+} = reduxWaiter
 
 enzyme.configure({ adapter: new Adapter() })
 const middleware = [thunk.withExtraArgument({})]
@@ -18,9 +20,7 @@ const initialState = combineReducers({
 const store = createStore(
   initialState,
   {},
-  compose(
-    applyMiddleware(...middleware),
-  ),
+  compose(applyMiddleware(...middleware)),
 )
 
 function mountComponent(Component) {
@@ -48,13 +48,12 @@ describe('(Redux Waiter) Connect Waiter', () => {
 
     const Component = connectWaiter({
       name: 'mywaiter',
-      requestCreator: () => new Promise((resolve) => {
-        setTimeout(() => resolve(MOCK_RESULT), 1000)
-      }),
-      requestOnMountParams: () => (MOCK_RESULT),
-    })(() => (
-      <div>Hello</div>
-    ))
+      requestCreator: () =>
+        new Promise((resolve) => {
+          setTimeout(() => resolve(MOCK_RESULT), 1000)
+        }),
+      requestOnMountParams: () => MOCK_RESULT,
+    })(() => <div>Hello</div>)
 
     it('Should render with pending state', async () => {
       expect.assertions(9)
@@ -101,13 +100,12 @@ describe('(Redux Waiter) Connect Waiter', () => {
 
     const Component = connectWaiter({
       name: 'rejectedWaiter',
-      requestCreator: () => new Promise((resolve, reject) => {
-        setTimeout(() => reject(MOCK_ERROR), 1500)
-      }),
+      requestCreator: () =>
+        new Promise((resolve, reject) => {
+          setTimeout(() => reject(MOCK_ERROR), 1500)
+        }),
       requestOnMount: true,
-    })(() => (
-      <div>Hello</div>
-    ))
+    })(() => <div>Hello</div>)
 
     it('Should render with pending state', async () => {
       expect.assertions(9)
@@ -153,25 +151,23 @@ describe('(Redux Waiter) Connect Waiter', () => {
       dones: true,
     }
 
+    const ErrorComponent = () => <div>Hello</div>
     const Component = connectWaiter({
       name: 'mywaiter',
-      requestCreator: () => new Promise((resolve) => {
-        setTimeout(() => resolve(MOCK_RESULT), 1000)
-      }),
-      requestOnMountParams: () => (MOCK_RESULT),
-    })(function Component() {
-      return (
-        <div>Hello</div>
-      )
-    })
+      requestCreator: () =>
+        new Promise((resolve) => {
+          setTimeout(() => resolve(MOCK_RESULT), 1000)
+        }),
+      requestOnMountParams: () => MOCK_RESULT,
+    })(ErrorComponent)
 
     it('Should not reject request with connectWaiter inner component error', async () => {
       expect.assertions(9)
       const wrapper = mountComponent(Component)
 
       // component should be stable when an error is thrown inside
-      const error = new Error('test');
-      wrapper.find('Component').simulateError(error);
+      const error = new Error('test')
+      wrapper.find('ErrorComponent').simulateError(error)
 
       await new Promise(resolve => setTimeout(resolve, 1600))
       wrapper.update()
@@ -191,4 +187,3 @@ describe('(Redux Waiter) Connect Waiter', () => {
     })
   })
 })
-
