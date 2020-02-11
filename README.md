@@ -69,16 +69,16 @@ const model = {
   // true if the request rejected, and is being called again
   isRetrying: false,
 
-  // start time of request in milliseconds
+  // start time of request in milliseconds UTC
   startTime: null,
 
-  // end time of request in milliseconds
+  // end time of request in milliseconds UTC
   endTime: null,
 
   // difference in milliseconds of start and end times
   elapsedTime: null,
 
-  // last time the model changed in milliseconds
+  // last time the model changed in milliseconds UTC
   lastModified: null,
 
   // how many times the request has been called and returned an error
