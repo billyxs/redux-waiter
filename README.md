@@ -75,7 +75,7 @@ const model = {
   // true if the request resolves or rejects
   isCompleted: false,
 
-  // true if the request is cancled
+  // true if the request is canceled
   isCanceled: false,
 
   // true if the request rejected, and is being called again
