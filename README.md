@@ -1,5 +1,7 @@
 # Redux Waiter
 
+[![NPM](https://nodei.co/npm/redux-waiter.png)](https://npmjs.org/package/redux-waiter)
+
 ## Installation
 
 `npm i redux-waiter --save`
