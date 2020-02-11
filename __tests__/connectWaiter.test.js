@@ -4,17 +4,15 @@ import enzyme, { mount } from 'enzyme'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux'
-import reduxWaiter, { connectWaiter, reducer } from '../src'
+import { connectWaiter, reducer } from '../src'
 
-const {
-  constants: { NAME },
-} = reduxWaiter
+import REDUX_MOUNT_POINT from './redux-mount-point'
 
 enzyme.configure({ adapter: new Adapter() })
 const middleware = [thunk.withExtraArgument({})]
 
 const initialState = combineReducers({
-  [NAME]: reducer,
+  [REDUX_MOUNT_POINT]: reducer,
 })
 
 const store = createStore(
