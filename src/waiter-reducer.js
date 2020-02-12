@@ -1,4 +1,4 @@
-import t from './actionTypes'
+import t from './actionTypes';
 
 export const waiterModel = {
   id: 0, // incremented after each request
@@ -27,10 +27,10 @@ export const waiterModel = {
 
   lastModified: null,
   attempts: 0,
-}
+};
 
 function getTime() {
-  return (new Date()).getTime()
+  return new Date().getTime();
 }
 
 const reducerMap = {
@@ -41,16 +41,13 @@ const reducerMap = {
     getParams: getParams || state.getParams,
   }),
   [t.INIT]: (state, payload) => {
-    const {
-      request,
-      name,
-    } = payload
+    const { request, name } = payload;
 
     // If we alredy have a response
     // we are in refresh mode
-    const isRefreshing = !!state.response
+    const isRefreshing = !!state.response;
 
-    const id = state.id + 1
+    const id = state.id + 1;
 
     return {
       ...state,
@@ -71,7 +68,7 @@ const reducerMap = {
 
       startTime: getTime(),
       lastModified: getTime(),
-    }
+    };
   },
   [t.RESOLVE]: (state, payload) => ({
     ...state,
@@ -101,7 +98,7 @@ const reducerMap = {
     elapsedTime: getTime() - state.startTime,
     lastModified: getTime(),
   }),
-  [t.CANCEL]: state => ({
+  [t.CANCEL]: (state) => ({
     ...state,
     request: null,
     response: null,
@@ -115,7 +112,7 @@ const reducerMap = {
     elapsedTime: getTime() - state.startTime,
     lastModified: getTime(),
   }),
-  [t.CLEAR]: state => ({
+  [t.CLEAR]: (state) => ({
     ...state,
 
     params: null,
@@ -138,12 +135,10 @@ const reducerMap = {
     lastModified: null,
     attempts: 0,
   }),
-}
+};
 
 export default (state = waiterModel, action) => {
-  const reducer = reducerMap[action.type]
+  const reducer = reducerMap[action.type];
 
-  return reducer
-      ? reducer(state, action.payload)
-      : state
-}
+  return reducer ? reducer(state, action.payload) : state;
+};

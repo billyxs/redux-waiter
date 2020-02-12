@@ -1,15 +1,16 @@
-import t from './actionTypes'
-import waiter from './waiter-reducer'
+import t from './actionTypes';
+import waiter from './waiter-reducer';
 
-const initialState = {}
+const initialState = {};
 
 const reducerMap = {
   // all the waiters
-  [t.CLEAR_ALL]: state => Object.values(state).reduce((acc, curr) => {
-    // eslint-disable-next-line no-param-reassign
-    acc[curr.name] = waiter(state[curr.name], { type: t.CLEAR })
-    return acc
-  }, {}),
+  [t.CLEAR_ALL]: (state) =>
+    Object.values(state).reduce((acc, curr) => {
+      // eslint-disable-next-line no-param-reassign
+      acc[curr.name] = waiter(state[curr.name], { type: t.CLEAR });
+      return acc;
+    }, {}),
 
   // waiter options
   [t.PREPARE]: (state, payload) => ({
@@ -36,20 +37,19 @@ const reducerMap = {
     ...state,
     [payload.name]: waiter(state[payload.name], { type: t.CLEAR, payload }),
   }),
-  [t.DESTROY]: (state, payload) => Object.keys(state).reduce((acc, curr) => {
-    if (curr === payload.name) {
-      return acc
-    }
-    return { ...acc, [curr]: state[curr] }
-  }, {}),
-  [t.CANCEL_ALL]: state => state.map(w => waiter(w, { type: t.CANCEL })),
+  [t.DESTROY]: (state, payload) =>
+    Object.keys(state).reduce((acc, curr) => {
+      if (curr === payload.name) {
+        return acc;
+      }
+      return { ...acc, [curr]: state[curr] };
+    }, {}),
+  [t.CANCEL_ALL]: (state) => state.map((w) => waiter(w, { type: t.CANCEL })),
   [t.DESTROY_ALL]: () => initialState,
-}
+};
 
 export default (state = initialState, action) => {
-  const reducer = reducerMap[action.type]
+  const reducer = reducerMap[action.type];
 
-  return reducer
-      ? reducer(state, action.payload)
-      : state
-}
+  return reducer ? reducer(state, action.payload) : state;
+};
