@@ -1,50 +1,56 @@
-import reduxWaiter from '../src'
-import REDUX_MOUNT_POINT from './redux-mount-point'
+import reduxWaiter from '../src';
+import REDUX_MOUNT_POINT from './redux-mount-point';
 
-const {
-  actions,
-  actionTypes,
-} = reduxWaiter
+const { actions, actionTypes } = reduxWaiter;
 
-const TEST_NAME = 'testName'
-const ACTION_TYPE_PREFIX = `@${REDUX_MOUNT_POINT}/`
+const TEST_NAME = 'testName';
+const ACTION_TYPE_PREFIX = `@${REDUX_MOUNT_POINT}/`;
 
 describe('(Redux Waiter) Actions', () => {
   describe('(Actions) request lifecycle', () => {
     describe('(Action) callWaiter', () => {
       it('Should be exported as a function.', () => {
-        expect(typeof actions.callWaiter).toBe('function')
-      })
-    })
+        expect(typeof actions.callWaiter).toBe('function');
+      });
+    });
 
     describe('(Action) initRequest', () => {
       it('Should be exported as a function.', () => {
-        expect(typeof actions.initRequest).toBe('function')
-      })
+        expect(typeof actions.initRequest).toBe('function');
+      });
 
       it(`Should return an action with a namespaced type of '${ACTION_TYPE_PREFIX}INIT'.`, () => {
-        expect(actions.initRequest(TEST_NAME)).toHaveProperty('type', actionTypes.INIT)
-      })
-    })
+        expect(actions.initRequest(TEST_NAME)).toHaveProperty(
+          'type',
+          actionTypes.INIT
+        );
+      });
+    });
 
     describe('(Action) resolveRequest', () => {
       it('Should be exported as a function.', () => {
-        expect(typeof actions.resolveRequest).toBe('function')
-      })
+        expect(typeof actions.resolveRequest).toBe('function');
+      });
 
       it(`Should return an action with a namespaced type of '${ACTION_TYPE_PREFIX}RESOLVE'.`, () => {
-        expect(actions.resolveRequest(TEST_NAME)).toHaveProperty('type', actionTypes.RESOLVE)
-      })
-    })
+        expect(actions.resolveRequest(TEST_NAME)).toHaveProperty(
+          'type',
+          actionTypes.RESOLVE
+        );
+      });
+    });
 
     describe('(Action) rejectRequest', () => {
       it('Should be exported as a function.', () => {
-        expect(typeof actions.rejectRequest).toBe('function')
-      })
+        expect(typeof actions.rejectRequest).toBe('function');
+      });
 
       it(`Should return an action with a namespaced type of '${ACTION_TYPE_PREFIX}REJECT'.`, () => {
-        expect(actions.rejectRequest(TEST_NAME)).toHaveProperty('type', actionTypes.REJECT)
-      })
-    })
-  })
-})
+        expect(actions.rejectRequest(TEST_NAME)).toHaveProperty(
+          'type',
+          actionTypes.REJECT
+        );
+      });
+    });
+  });
+});

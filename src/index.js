@@ -1,24 +1,24 @@
-import * as actions from './actions'
-import actionTypes from './actionTypes'
-import * as constants from './constants'
-import * as selectors from './selectors'
-import _reducer from './reducer'
+import * as actions from './actions';
+import actionTypes from './actionTypes';
+import * as constants from './constants';
+import * as selectors from './selectors';
+import _reducer from './reducer';
 
-export connectWaiter from './connectWaiter'
+export connectWaiter from './connectWaiter';
 
 // reducer
-export const reducer = _reducer
+export const reducer = _reducer;
 
 // selectors
-export const getWaiter = selectors.getWaiter
-export const getWaiterResponse = selectors.getWaiterResponse
-export const getWaiterError = selectors.getWaiterError
+export const getWaiter = selectors.getWaiter;
+export const getWaiterResponse = selectors.getWaiterResponse;
+export const getWaiterError = selectors.getWaiterError;
 
 // actions
-export const callWaiter = actions.callWaiter
-export const clearWaiter = actions.clearWaiter
-export const prepareWaiter = actions.prepareWaiter
-export const destroyWaiter = actions.destroyWaiter
+export const callWaiter = actions.callWaiter;
+export const clearWaiter = actions.clearWaiter;
+export const prepareWaiter = actions.prepareWaiter;
+export const destroyWaiter = actions.destroyWaiter;
 
 export default {
   actions,
@@ -26,4 +26,4 @@ export default {
   constants,
   selectors,
   reducer,
-}
+};

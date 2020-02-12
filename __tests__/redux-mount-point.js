@@ -1,9 +1,9 @@
-import { NAME } from '../src/constants'
+import { NAME } from '../src/constants';
 
-export default NAME
+export default NAME;
 
 describe('Redux mount point', () => {
   it('Should match NAME export in constants', () => {
-    expect(NAME).toBe('waiter')
-  })
-})
+    expect(NAME).toBe('waiter');
+  });
+});

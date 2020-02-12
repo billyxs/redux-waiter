@@ -10,7 +10,7 @@ import {
   CLEAR_ALL,
   DESTROY,
   DESTROY_ALL,
-} from './constants'
+} from './constants';
 
 export default [
   PREPARE,
@@ -25,6 +25,6 @@ export default [
   DESTROY_ALL,
 ].reduce((acc, action) => {
   // eslint-disable-next-line no-param-reassign
-  acc[action] = `@${NAME}/${action}`
-  return acc
-}, {})
+  acc[action] = `@${NAME}/${action}`;
+  return acc;
+}, {});
