@@ -23,7 +23,7 @@ describe('(Redux Waiter) Actions', () => {
       })
 
       it(`Should return an action with a namespaced type of '${ACTION_TYPE_PREFIX}INIT'.`, () => {
-        // expect(actions.initRequest(TEST_NAME)).to.have.property('type', actionTypes.INIT)
+        expect(actions.initRequest(TEST_NAME)).toHaveProperty('type', actionTypes.INIT)
       })
     })
 
@@ -33,7 +33,7 @@ describe('(Redux Waiter) Actions', () => {
       })
 
       it(`Should return an action with a namespaced type of '${ACTION_TYPE_PREFIX}RESOLVE'.`, () => {
-        // expect(actions.resolveRequest(TEST_NAME)).to.have.property('type', actionTypes.RESOLVE)
+        expect(actions.resolveRequest(TEST_NAME)).toHaveProperty('type', actionTypes.RESOLVE)
       })
     })
 
@@ -43,7 +43,7 @@ describe('(Redux Waiter) Actions', () => {
       })
 
       it(`Should return an action with a namespaced type of '${ACTION_TYPE_PREFIX}REJECT'.`, () => {
-        // expect(actions.rejectRequest(TEST_NAME)).to.have.property('type', actionTypes.REJECT)
+        expect(actions.rejectRequest(TEST_NAME)).toHaveProperty('type', actionTypes.REJECT)
       })
     })
   })
