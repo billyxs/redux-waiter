@@ -25,7 +25,7 @@
     "name": "Calvin Cieslak",
     "url": "https://github.com/seesleestak"
   }],
-  "bugs": "https://github.com/hixme/redux-waiter/issues",
+  "bugs": "https://github.com/hixme/redux-waiter/issues/",
   "dependencies": {
     "lodash": "^4.17.4",
     "reselect": "*"
@@ -90,6 +90,17 @@
     "flow": "flow",
     "prettier": "prettier --write ./**/*.{js,css}",
     "prepublish": "npm run clean && npm run lint && npm run build && npm run test"
+  },
+  "lint-staged": {
+    "(src|__tests__)/**/*.{js,jsx}": [
+      "npm run lint",
+      "npm run prettier"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "jest": {
     "verbose": true,
