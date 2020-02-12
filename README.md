@@ -8,34 +8,29 @@
 
 This gives you access to the reducer, constants, actions, and selectors available
 
-
 ## Add to your combineReducers()
 
 ```javascript
-import { reducer } from 'redux-waiter'
+import { reducer } from 'redux-waiter';
 
 const initialState = combineReducers({
-  waiter: reducer
-})
+  waiter: reducer,
+});
 
 const store = createStore(
   initialState,
   {},
-  compose(
-    applyMiddleware(...[thunk]),
-  ),
-)
+  compose(applyMiddleware(...[thunk]))
+);
 ```
 
 **NOTE:** Ensure you have redux-thunk configured as middleware in your store implementation
-
 
 ## Waiter model description and defaults
 
 Each waiter initialized will have these properties.
 
 ```javascript
-
 const model = {
   // incremented after each request
   id: 0,
@@ -96,9 +91,8 @@ const model = {
   // how many times the request has been called and returned an error
   // resets after a successful response
   attempts: 0,
-}
+};
 ```
-
 
 ## connectWaiter
 
@@ -106,16 +100,16 @@ const model = {
 
 connectWaiter is a higher-order-component that connects the your waiter
 promise to another component.
-You can listen in on waiter events and dispatch other actions.  You can add
+You can listen in on waiter events and dispatch other actions. You can add
 custom views to different waiter states,
 as well as add custom actions to the mount and unmount lifecycle events
 
 Below is the full interface for connectWaiter, ordered in the sequence that the actions take place
 
 ```javascript
-import { connectWaiter } from 'redux-waiter'
-import MyComponent from 'path/to/MyComponent'
-import notification from 'path/to/notification'
+import { connectWaiter } from 'redux-waiter';
+import MyComponent from 'path/to/MyComponent';
+import notification from 'path/to/notification';
 
 const SearchRequestForm = connectWaiter({
   name: 'my-waiter-name',
@@ -123,7 +117,7 @@ const SearchRequestForm = connectWaiter({
 
   // onMount
   onMount: (props) => {
-    props.dispatch(customAction())
+    props.dispatch(customAction());
   },
   clearOnMount: true,
 
@@ -131,38 +125,38 @@ const SearchRequestForm = connectWaiter({
   requestOnMount: true,
 
   // pass parameters to the request creator based on props
-  requestOnMountParams: (props) => ({name: 'First', last: 'Last'}),
+  requestOnMountParams: (props) => ({ name: 'First', last: 'Last' }),
 
   // like requestOnMountParams, but used to initialize the call to
   // the waiter again on props change
-  requestOnPropsChange: (props) => ({name: 'First', last: 'Last'}),
+  requestOnPropsChange: (props) => ({ name: 'First', last: 'Last' }),
 
   // on unmount
   onUnmount: (waiter, props) => {
-    props.dispatch(customAction())
+    props.dispatch(customAction());
   },
   clearOnUnmount: true,
 
   // state actions
   onPending: (waiter, props) => {
-    console.log('onPending - ', waiter)
-    props.dispatch(loadData(waiter.response))
+    console.log('onPending - ', waiter);
+    props.dispatch(loadData(waiter.response));
   },
   onResolve: (waiter, props) => {
-    console.log('onResolve - ', waiter)
-    props.dispatch(sendError(waiter.error))
+    console.log('onResolve - ', waiter);
+    props.dispatch(sendError(waiter.error));
   },
   onReject: (waiter, props) => {
-    console.log('onReject - ', waiter.error)
+    console.log('onReject - ', waiter.error);
   },
   onComplete: (waiter, props) => {
-    console.log('onComplete - ', waiter)
+    console.log('onComplete - ', waiter);
   },
 
   // alternate views
   pendingView: LoadingView,
-  rejectedView: FailureView
-})(MyComponent)
+  rejectedView: FailureView,
+})(MyComponent);
 ```
 
 ## Actions
@@ -210,12 +204,11 @@ params, response, and error data. The waiter stays in the store and can be
 used again.
 
 ```javascript
-import { clearWaiter } from 'redux-waiter'
+import { clearWaiter } from 'redux-waiter';
 
 // In you redux environment
-dispatch(clearWaiter('waiter-name'))
+dispatch(clearWaiter('waiter-name'));
 ```
-
 
 ### destroyWaiter(waiterName)
 
@@ -223,10 +216,10 @@ Destroy will remove the waiter from the store. It will not longer be
 accessible unless initialized again.
 
 ```javascript
-import { destroyWaiter } from 'redux-waiter'
+import { destroyWaiter } from 'redux-waiter';
 
 // In you redux environment
-dispatch(destroyWaiter('waiter-name'))
+dispatch(destroyWaiter('waiter-name'));
 ```
 
 ## Selectors
@@ -236,22 +229,22 @@ dispatch(destroyWaiter('waiter-name'))
 Get all the waiter data from the store by it's name.
 
 ```javascript
-import { getWaiter } from 'redux-waiter'
+import { getWaiter } from 'redux-waiter';
 
 // In your mapStateToProps somewhere
-(state) => getWaiter(state, 'get-toy',)
-
+(state) => getWaiter(state, 'get-toy');
 ```
+
 ### getWaiterResponse(state, waiterName)
 
 Get only the response of the promise by the waiter name. Returns null if no
 response has been given.
 
 ```javascript
-import { getWaiterResponse } from 'redux-waiter'
+import { getWaiterResponse } from 'redux-waiter';
 
 // In your mapStateToProps somewhere
-(state) => getWaiterResponse(state, 'get-toy',)
+(state) => getWaiterResponse(state, 'get-toy');
 ```
 
 ### getWaiterError(state, waiterName)
@@ -260,10 +253,10 @@ Get only the error of the promise by the waiter name. Returns null if no error
 was given.
 
 ```javascript
-import { getWaiterError } from 'redux-waiter'
+import { getWaiterError } from 'redux-waiter';
 
 // In your mapStateToProps somewhere
-(state) => getWaiterError(state, 'get-toy',)
+(state) => getWaiterError(state, 'get-toy');
 ```
 
 ## Example
@@ -271,11 +264,12 @@ import { getWaiterError } from 'redux-waiter'
 ### Valid Document Link
 
 Create your component with the `connectWaiter`
-```javascript
-import React from 'react'
-import axios from 'axios'
 
-import { connectWaiter } from 'redux-waiter'
+```javascript
+import React from 'react';
+import axios from 'axios';
+
+import { connectWaiter } from 'redux-waiter';
 
 const UrlLink = connectWaiter({
   // dynamic waiter name using props
@@ -284,16 +278,15 @@ const UrlLink = connectWaiter({
   requestOnMountParams: (props) => ({ url: props.url }),
 
   // alternate views for the Promise lifecycle
-  pendingView: () => (<span>...</span>),
-  rejectedView: () => (<span>Invalid link</span>),
-})((props) => <a href={props.url}>Click to View</a>)
+  pendingView: () => <span>...</span>,
+  rejectedView: () => <span>Invalid link</span>,
+})((props) => <a href={props.url}>Click to View</a>);
 ```
 
 Implement your component in the JSX
+
 ```html
-...
-<UrlLink url='https://link.to.pdf' />'
-...
+... <UrlLink url="https://link.to.pdf" />' ...
 ```
 
 ## Dependencies
