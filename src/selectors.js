@@ -3,7 +3,7 @@ import { waiterModel } from './waiter-reducer';
 
 import { NAME } from './constants';
 
-export const getWaiterStore = createSelector(
+const getWaiterStore = createSelector(
   (state) => state[NAME],
   (waiterStore) => waiterStore || {}
 );

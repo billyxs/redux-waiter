@@ -171,6 +171,7 @@ describe('(Redux Waiter) Connect Waiter', () => {
       dones: true,
     };
 
+    const ErrorComponent = () => <div>Hello</div>;
     const Component = connectWaiter({
       name: 'mywaiter',
       requestCreator: () =>
@@ -178,9 +179,7 @@ describe('(Redux Waiter) Connect Waiter', () => {
           setTimeout(() => resolve(MOCK_RESULT), 1000);
         }),
       requestOnMountParams: () => MOCK_RESULT,
-    })(function Component() {
-      return <div>Hello</div>;
-    });
+    })(ErrorComponent);
 
     it('Should not reject request with connectWaiter inner component error', async () => {
       expect.assertions(14);
@@ -188,7 +187,7 @@ describe('(Redux Waiter) Connect Waiter', () => {
 
       // component should be stable when an error is thrown inside
       const error = new Error('test');
-      wrapper.find('Component').simulateError(error);
+      wrapper.find('ErrorComponent').simulateError(error);
 
       await new Promise((resolve) => setTimeout(resolve, 1600));
       wrapper.update();

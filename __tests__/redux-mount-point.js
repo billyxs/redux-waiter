@@ -2,9 +2,8 @@ import { NAME } from '../src/constants';
 
 export default NAME;
 
-// dummy test
-describe('redux mount point', () => {
-  it('should be ...', () => {
-    expect(NAME).toBe(NAME);
+describe('Redux mount point', () => {
+  it('Should match NAME export in constants', () => {
+    expect(NAME).toBe('waiter');
   });
 });
