@@ -1,7 +1,7 @@
 {
   "name": "redux-waiter",
   "version": "0.4.1",
-  "description": "Generic promise store with redux",
+  "description": "A promise lifecycle manager with redux",
   "main": "lib/index.js",
   "directories": {
     "example": "examples",
@@ -16,7 +16,16 @@
     "redux",
     "javascript"
   ],
-  "author": "Billy Montgomery billy.montgomery@hixme.com",
+  "author": {
+    "name": "Billy Montgomery",
+    "email": "billy.montgomery@gmail.com",
+    "url": "https://github.com/billyxs"
+  },
+  "contributors": [{
+    "name": "Calvin Cieslak",
+    "url": "https://github.com/seesleestak"
+  }],
+  "bugs": "https://github.com/hixme/redux-waiter/issues",
   "dependencies": {
     "lodash": "^4.17.4",
     "reselect": "*"
