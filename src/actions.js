@@ -57,8 +57,13 @@ export const destroyWaiter = (name) => ({
 
 export function callWaiter(name, { requestCreator, params }) {
   return (dispatch, getState) => {
-    if (requestCreator) {
-      dispatch(prepareWaiter(name, { requestCreator }));
+    if (requestCreator || params) {
+      dispatch(
+        prepareWaiter(name, {
+          requestCreator,
+          params,
+        })
+      );
     }
     const waiterData = getWaiter(getState(), name);
 
@@ -73,8 +78,8 @@ export function callWaiter(name, { requestCreator, params }) {
       );
     }
 
-    const request = waiterData.requestCreator(params, dispatch);
-    dispatch(initRequest(name, { request, params }));
+    const request = waiterData.requestCreator(waiterData.params, dispatch);
+    dispatch(initRequest(name, { request }));
     request
       .then((data) => {
         dispatch(resolveRequest(name, data));
