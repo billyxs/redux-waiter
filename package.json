@@ -30,7 +30,6 @@
   ],
   "bugs": "https://github.com/hixme/redux-waiter/issues/",
   "dependencies": {
-    "lodash": "^4.17.4",
     "reselect": "*"
   },
   "peerDependencies": {
