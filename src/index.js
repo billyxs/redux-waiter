@@ -4,7 +4,9 @@ import * as constants from './constants';
 import * as selectors from './selectors';
 import _reducer from './reducer';
 
-export connectWaiter from './connectWaiter';
+import _connectWaiter from './connectWaiter';
+
+export const connectWaiter = _connectWaiter;
 
 // reducer
 export const reducer = _reducer;
