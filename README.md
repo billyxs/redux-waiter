@@ -172,8 +172,8 @@ import { callWaiter } from 'redux-waiter'
 
 dispatch(
   callWaiter('get-toy', {
-    { id: '1'},
-    requestCreator: (params) => getToyPromise(params.id)
+    requestCreator: (params) => getToyPromise(params.id),
+    params: { id: '1'}
   })
 )
 ```
@@ -189,8 +189,8 @@ import { prepareWaiter } from 'redux-waiter'
 
 dispatch(
   prepareWaiter('get-toy', {
-    { id: '1'},
-    requestCreator: (params) => getToyPromise(params.id)
+    requestCreator: (params) => getToyPromise(params.id),
+    params: { id: '1'}
   })
 )
 
@@ -272,10 +272,11 @@ import axios from 'axios';
 
 import { connectWaiter } from 'redux-waiter';
 
-const UrlLink = connectWaiter({
+const ValidUrlLink = connectWaiter({
   // dynamic waiter name using props
   name: (props) => `link:${props.url}`,
-  requestCreator: (params) => httpClient({ url: params.url }),
+
+  requestCreator: (params) => axios({ url: params.url }),
   requestOnMountParams: (props) => ({ url: props.url }),
 
   // alternate views for the Promise lifecycle
@@ -287,7 +288,7 @@ const UrlLink = connectWaiter({
 Implement your component in the JSX
 
 ```html
-... <UrlLink url="https://link.to.pdf" />' ...
+... <ValidUrlLink url="https://link.to.pdf" />' ...
 ```
 
 ## Dependencies
