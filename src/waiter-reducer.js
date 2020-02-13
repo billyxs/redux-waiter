@@ -5,10 +5,8 @@ export const waiterModel = {
   name: null,
 
   requestCreator: null,
-  transformResponse: null,
-  defaultParams: null,
-
   params: null,
+
   request: null,
   response: null,
   error: null,
@@ -34,11 +32,11 @@ function getTime() {
 }
 
 const reducerMap = {
-  [t.PREPARE]: (state, { name, requestCreator, getParams }) => ({
+  [t.PREPARE]: (state, { name, requestCreator, params }) => ({
     ...state,
     name,
     requestCreator: requestCreator || state.requestCreator,
-    getParams: getParams || state.getParams,
+    params: params || state.params,
   }),
   [t.INIT]: (state, payload) => {
     const { request, name } = payload;

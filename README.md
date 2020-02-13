@@ -168,14 +168,14 @@ The call action will invoke the requestCreator with the supplied params and
 store all waiter processes to the waiterName given.
 
 ```javascript
-import { callWaiter } from 'redux-waiter'
+import { callWaiter } from 'redux-waiter';
 
 dispatch(
   callWaiter('get-toy', {
     requestCreator: (params) => getToyPromise(params.id),
-    params: { id: '1'}
+    params: { id: '1' },
   })
-)
+);
 ```
 
 ### prepareWaiter(waiterName, { params, requestCreator })
