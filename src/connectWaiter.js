@@ -6,9 +6,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import isFunction from 'lodash/isFunction';
 import * as selectors from './selectors';
 import * as actions from './actions';
+
+function isFunction(fn) {
+  return fn && {}.toString.call(fn) === '[object Function]';
+}
 
 export default (params) => {
   const PendingView = params.pendingView;
