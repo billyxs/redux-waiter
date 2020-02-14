@@ -82,10 +82,44 @@ export function callWaiter(name, { requestCreator, params }) {
     dispatch(initRequest(name, { request }));
     request
       .then((data) => {
+        const preEndState = getWaiter(getState(), name);
+
+        // waiter was destroyed
+        if (preEndState.name === null) {
+          return null;
+        }
+
+        // A new request was made, should not listen to this request anymore
+        if (preEndState.id !== waiterData.id) {
+          return null;
+        }
+
+        // Request was canceled
+        if (preEndState.isCanceled) {
+          return null;
+        }
+
         dispatch(resolveRequest(name, data));
         return getWaiter(getState(), name);
       })
       .catch((error) => {
+        const preEndState = getWaiter(getState(), name);
+
+        // waiter was destroyed
+        if (preEndState.name === null) {
+          return null;
+        }
+
+        // A new request was made, should not listen to this request anymore
+        if (preEndState.id !== waiterData.id) {
+          return null;
+        }
+
+        // Request was canceled
+        if (preEndState.isCanceled) {
+          return null;
+        }
+
         dispatch(rejectRequest(name, error));
         return getWaiter(getState(), name);
       });
