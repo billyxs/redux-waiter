@@ -41,8 +41,6 @@ const model = {
   // your request to track
   requestCreator: null,
 
-  defaultParams: null,
-
   // the params for your request to use
   params: null,
 
@@ -206,7 +204,7 @@ used again.
 ```javascript
 import { clearWaiter } from 'redux-waiter';
 
-// In you redux environment
+// In your redux environment
 dispatch(clearWaiter('waiter-name'));
 ```
 
