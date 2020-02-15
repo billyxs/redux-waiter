@@ -11,6 +11,10 @@ describe('(Redux Waiter) ActionTypes', () => {
       expect(actionTypes.INIT).toBe(ACTION_TYPE_PREFIX + constants.INIT);
     });
 
+    it('Should export a actionType CANCEL', () => {
+      expect(actionTypes.CANCEL).toBe(ACTION_TYPE_PREFIX + constants.CANCEL);
+    });
+
     it('Should export a actionType RESOLVE', () => {
       expect(actionTypes.RESOLVE).toBe(ACTION_TYPE_PREFIX + constants.RESOLVE);
     });
@@ -23,6 +27,14 @@ describe('(Redux Waiter) ActionTypes', () => {
       expect(actionTypes.COMPLETE).toBe(
         ACTION_TYPE_PREFIX + constants.COMPLETE
       );
+    });
+
+    it('Should export a actionType CLEAR', () => {
+      expect(actionTypes.CLEAR).toBe(ACTION_TYPE_PREFIX + constants.CLEAR);
+    });
+
+    it('Should export a actionType DESTROY', () => {
+      expect(actionTypes.DESTROY).toBe(ACTION_TYPE_PREFIX + constants.DESTROY);
     });
   });
 });

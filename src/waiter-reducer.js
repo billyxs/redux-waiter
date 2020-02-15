@@ -130,7 +130,7 @@ const reducerMap = {
     endTime: null,
     elapsedTime: null,
 
-    lastModified: null,
+    lastModified: getTime(),
     attempts: 0,
   }),
 };

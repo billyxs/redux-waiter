@@ -166,6 +166,46 @@ describe('(Redux Waiter) Connect Waiter', () => {
     });
   });
 
+  describe('should handle destroy', () => {
+    const MOCK_ERROR = {
+      message: 'ERROR MESSAGE',
+    };
+
+    const Component = connectWaiter({
+      name: 'rejectedWaiter',
+      requestCreator: () =>
+        new Promise((resolve, reject) => {
+          setTimeout(() => reject(MOCK_ERROR), 1500);
+        }),
+      requestOnMount: true,
+    })(() => <div>Hello</div>);
+
+    it('Should not resolve or reject', async () => {
+      expect.assertions(14);
+      const wrapper = mountComponent(Component);
+      await new Promise((resolve) => setTimeout(resolve, 1600));
+      wrapper.update();
+      const { waiter } = getWaiterProps(wrapper);
+
+      expect(waiter.response).toBe(null);
+      expect(waiter.error).toBe(MOCK_ERROR);
+
+      expect(waiter.isPending).toBe(false);
+      expect(waiter.isCompleted).toBe(true);
+      expect(waiter.isResolved).toBe(false);
+      expect(waiter.isRejected).toBe(true);
+      expect(waiter.isCanceled).toBe(false);
+      expect(waiter.isRefreshing).toBe(false);
+      expect(waiter.isRetrying).toBe(false);
+
+      expect(typeof waiter.startTime).toBe('number');
+      expect(typeof waiter.lastModified).toBe('number');
+      expect(typeof waiter.endTime).toBe('number');
+      expect(typeof waiter.elapsedTime).toBe('number');
+      expect(waiter.startTime < waiter.endTime).toBe(true);
+    });
+  });
+
   describe('should catch error', () => {
     const MOCK_RESULT = {
       dones: true,
