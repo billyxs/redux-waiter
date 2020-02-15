@@ -114,7 +114,6 @@ const reducerMap = {
   [t.CLEAR]: (state) => ({
     ...state,
 
-    params: null,
     request: null,
     response: null,
     error: null,
