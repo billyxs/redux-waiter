@@ -110,6 +110,7 @@ const reducerMap = {
     elapsedTime: getTime() - state.startTime,
     lastModified: getTime(),
   }),
+
   [t.CLEAR]: (state) => ({
     ...state,
 

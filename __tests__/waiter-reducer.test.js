@@ -54,8 +54,8 @@ describe('(Redux Waiter)', () => {
   });
 
   describe('(Action) initRequest', () => {
-    let state = reducer(undefined, {});
-    state = reducer(state, actions.initRequest(TEST_NAME));
+    const beginState = reducer(undefined, {});
+    const state = reducer(beginState, actions.initRequest(TEST_NAME));
 
     it(`Should change state name from empty to ${TEST_NAME}.`, () => {
       expect(state.name).toBe(TEST_NAME);
@@ -81,9 +81,37 @@ describe('(Redux Waiter)', () => {
     });
   });
 
+  describe('(Action) cancelRequest', () => {
+    const beginState = reducer(undefined, {});
+    const state = reducer(beginState, actions.cancelRequest(TEST_NAME));
+
+    it('Should change state isCanceled from false to true.', () => {
+      expect(state.isCanceled).toBe(true);
+    });
+
+    it('Should update timestamps - endTime, elapsedTime, lastModified', () => {
+      expect(state.startTime).toBe(null);
+      expect(typeof state.lastModified).toBe('number');
+      expect(typeof state.endTime).toBe('number');
+      expect(typeof state.elapsedTime).toBe('number');
+    });
+
+    it('Should keep state - error, isPending, isRejected, isCompleted.', () => {
+      expect(state.response).toBe(null);
+      expect(state.error).toBe(null);
+      expect(state.isPending).toBe(false);
+      expect(state.isResolved).toBe(false);
+      expect(state.isRejected).toBe(false);
+      expect(state.isCompleted).toBe(false);
+    });
+  });
+
   describe('(Action) resolveRequest', () => {
-    let state = reducer(undefined, {});
-    state = reducer(state, actions.resolveRequest(TEST_NAME, REQUEST_PAYLOAD));
+    const beginState = reducer(undefined, {});
+    const state = reducer(
+      beginState,
+      actions.resolveRequest(TEST_NAME, REQUEST_PAYLOAD)
+    );
 
     it('Should change state isResolved from false to true.', () => {
       expect(state.isResolved).toBe(true);
@@ -109,9 +137,9 @@ describe('(Redux Waiter)', () => {
   });
 
   describe('(Action) rejectRequest', () => {
-    let state = reducer(undefined, {});
+    const beginState = reducer(undefined, {});
     const rejectAction = actions.rejectRequest(TEST_NAME, REQUEST_ERROR);
-    state = reducer(state, rejectAction);
+    const state = reducer(beginState, rejectAction);
 
     it('Should change state isRejected from false to true.', () => {
       expect(state.isRejected).toBe(true);
