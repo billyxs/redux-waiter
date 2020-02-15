@@ -33,6 +33,45 @@ describe('(Redux Waiter) Actions', () => {
       });
     });
 
+    describe('(Action) clearWaiter', () => {
+      it('Should be exported as a function.', () => {
+        expect(typeof actions.clearWaiter).toBe('function');
+      });
+
+      it(`Should return an action with a namespaced type of '${ACTION_TYPE_PREFIX}CLEAR'.`, () => {
+        expect(actions.clearWaiter(TEST_NAME)).toHaveProperty(
+          'type',
+          actionTypes.CLEAR
+        );
+      });
+    });
+
+    describe('(Action) destroyWaiter', () => {
+      it('Should be exported as a function.', () => {
+        expect(typeof actions.destroyWaiter).toBe('function');
+      });
+
+      it(`Should return an action with a namespaced type of '${ACTION_TYPE_PREFIX}DESTROY'.`, () => {
+        expect(actions.destroyWaiter(TEST_NAME)).toHaveProperty(
+          'type',
+          actionTypes.DESTROY
+        );
+      });
+    });
+
+    describe('(Action) cancelRequest', () => {
+      it('Should be exported as a function.', () => {
+        expect(typeof actions.cancelRequest).toBe('function');
+      });
+
+      it(`Should return an action with a namespaced type of '${ACTION_TYPE_PREFIX}CANCEL'.`, () => {
+        expect(actions.cancelRequest(TEST_NAME)).toHaveProperty(
+          'type',
+          actionTypes.CANCEL
+        );
+      });
+    });
+
     describe('(Action) resolveRequest', () => {
       it('Should be exported as a function.', () => {
         expect(typeof actions.resolveRequest).toBe('function');

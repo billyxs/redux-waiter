@@ -135,4 +135,35 @@ describe('(Redux Waiter)', () => {
       expect(state.isCompleted).toBe(true);
     });
   });
+
+  describe('(Action) clearWaiter', () => {
+    const beginState = reducer(undefined, {});
+    const initState = reducer(beginState, actions.initRequest(TEST_NAME));
+
+    it(`Should change state name from empty to ${TEST_NAME}.`, () => {
+      expect(initState.name).toBe(TEST_NAME);
+      expect(typeof initState.lastModified).toBe('number');
+      expect(initState.isPending).toBe(true);
+    });
+
+    const clearState = reducer(initState, actions.clearWaiter(TEST_NAME));
+
+    it('should set keep waiter name and lastModified timestamp', () => {
+      expect(clearState.name).toBe(TEST_NAME);
+      expect(typeof clearState.lastModified).toBe('number');
+    });
+
+    it('should set rest of waiter to initial state', () => {
+      expect(clearState.response).toBe(null);
+      expect(clearState.error).toBe(null);
+      expect(clearState.isPending).toBe(false);
+      expect(clearState.isResolved).toBe(false);
+      expect(clearState.isRejected).toBe(false);
+      expect(clearState.isCompleted).toBe(false);
+      expect(clearState.isCanceled).toBe(false);
+      expect(clearState.startTime).toBe(null);
+      expect(clearState.endTime).toBe(null);
+      expect(clearState.elapsedTime).toBe(null);
+    });
+  });
 });
