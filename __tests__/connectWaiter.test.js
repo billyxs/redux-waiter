@@ -183,7 +183,7 @@ describe('(Redux Waiter) Connect Waiter', () => {
       requestOnMount: true,
     })(() => <div>Hello</div>);
 
-    it.only('Should not resolve or reject', async () => {
+    it('Should not resolve or reject', async () => {
       expect.assertions(1);
       const wrapper = mountComponent(Component);
       await new Promise((resolve) => setTimeout(resolve, 500));
