@@ -14,6 +14,12 @@ describe('(Redux Waiter) Actions', () => {
       });
     });
 
+    describe('(Action) waiterResponseHandler', () => {
+      it('Should be exported as a function.', () => {
+        expect(typeof actions.waiterResponseHandler).toBe('function');
+      });
+    });
+
     describe('(Action) initRequest', () => {
       it('Should be exported as a function.', () => {
         expect(typeof actions.initRequest).toBe('function');
