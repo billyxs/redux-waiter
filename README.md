@@ -1,6 +1,7 @@
 # Redux Waiter
 
 [![NPM](https://nodei.co/npm/redux-waiter.png)](https://npmjs.org/package/redux-waiter)
+[![Build Status](https://travis-ci.org/hixme/redux-waiter?branch=master)](https://travis-ci.com/hixme/redux-waiter)
 
 ## Installation
 
