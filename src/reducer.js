@@ -37,6 +37,13 @@ const reducerMap = {
     ...state,
     [payload.name]: waiter(state[payload.name], { type: t.CLEAR, payload }),
   }),
+  [t.CLEAR_ALL]: (state) =>
+    Object.keys(state).reduce((acc, curr) => {
+      return {
+        ...acc,
+        [curr]: waiter(state[curr], { type: t.CLEAR }),
+      };
+    }, {}),
   [t.DESTROY]: (state, payload) =>
     Object.keys(state).reduce((acc, curr) => {
       if (curr === payload.name) {
@@ -44,7 +51,6 @@ const reducerMap = {
       }
       return { ...acc, [curr]: state[curr] };
     }, {}),
-  [t.CANCEL_ALL]: (state) => state.map((w) => waiter(w, { type: t.CANCEL })),
   [t.DESTROY_ALL]: () => initialState,
 };
 
