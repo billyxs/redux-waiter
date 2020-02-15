@@ -55,6 +55,34 @@ export const destroyWaiter = (name) => ({
   },
 });
 
+export function waiterResponseHandler(
+  name,
+  { waiterId, responseAction, responseData }
+) {
+  return (dispatch, getState) => {
+    const waiterData = getWaiter(getState(), name);
+
+    // waiter was cleared or destroyed
+    if (waiterData.request === null) {
+      return waiterData;
+    }
+
+    // A new request was made
+    // should not listen to this request anymore
+    if (waiterId !== waiterData.id) {
+      return waiterData;
+    }
+
+    // Request was canceled
+    if (waiterData.isCanceled) {
+      return waiterData;
+    }
+
+    dispatch(responseAction(name, responseData));
+    return getWaiter(getState(), name);
+  };
+}
+
 export function callWaiter(name, { requestCreator, params }) {
   return (dispatch, getState) => {
     if (requestCreator || params) {
@@ -81,55 +109,27 @@ export function callWaiter(name, { requestCreator, params }) {
     const request = waiterData.requestCreator(waiterData.params, dispatch);
 
     dispatch(initRequest(name, { request }));
-    const preRequestWaiterId = getWaiter(getState(), name).id;
+    const waiterId = getWaiter(getState(), name).id;
 
-    request
-      .then((data) => {
-        const postRequestWaiter = getWaiter(getState(), name);
-
-        // waiter was cleared
-        if (postRequestWaiter.request === null) {
-          return postRequestWaiter;
-        }
-
-        // A new request was made,
-        // should not listen to this request anymore
-        if (preRequestWaiterId !== postRequestWaiter.id) {
-          return postRequestWaiter;
-        }
-
-        // Request was canceled
-        if (postRequestWaiter.isCanceled) {
-          return postRequestWaiter;
-        }
-
-        dispatch(resolveRequest(name, data));
-        return getWaiter(getState(), name);
-      })
-      .catch((error) => {
-        const postRequestWaiter = getWaiter(getState(), name);
-
-        // waiter was cleared
-        if (postRequestWaiter.request === null) {
-          return postRequestWaiter;
-        }
-
-        // A new request was made
-        // should not listen to this request anymore
-        if (preRequestWaiterId !== postRequestWaiter.id) {
-          return postRequestWaiter;
-        }
-
-        // Request was canceled
-        if (postRequestWaiter.isCanceled) {
-          return postRequestWaiter;
-        }
-
-        dispatch(rejectRequest(name, error));
-        return getWaiter(getState(), name);
-      });
-
-    return request;
+    return request
+      .then((data) =>
+        dispatch(
+          waiterResponseHandler(name, {
+            waiterId,
+            responseAction: resolveRequest,
+            responseData: data,
+          })
+        )
+      )
+      .catch((error) =>
+        dispatch(
+          waiterResponseHandler(name, {
+            waiterId,
+            responseAction: rejectRequest,
+            responseData: error,
+          })
+        )
+      );
   };
 }
 
