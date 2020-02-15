@@ -207,8 +207,8 @@ import { clearWaiter } from 'redux-waiter';
 
 // In your redux environment
 dispatch(clearWaiter('waiter-name'));
-
 ```
+
 ### clearAll()
 
 Clear all the waiters in the store.
