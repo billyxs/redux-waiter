@@ -207,6 +207,17 @@ import { clearWaiter } from 'redux-waiter';
 
 // In your redux environment
 dispatch(clearWaiter('waiter-name'));
+
+```
+### clearAll()
+
+Clear all the waiters in the store.
+
+```javascript
+import { clearAll } from 'redux-waiter';
+
+// In you redux environment
+dispatch(clearAll());
 ```
 
 ### destroyWaiter(waiterName)
@@ -219,6 +230,17 @@ import { destroyWaiter } from 'redux-waiter';
 
 // In you redux environment
 dispatch(destroyWaiter('waiter-name'));
+```
+
+### destroyAll()
+
+Destroy all the waiters in the store.
+
+```javascript
+import { destroyAll } from 'redux-waiter';
+
+// In you redux environment
+dispatch(destroyAll());
 ```
 
 ## Selectors
