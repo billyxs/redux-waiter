@@ -4,7 +4,9 @@ import enzyme, { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux';
-import { connectWaiter, reducer } from '../src';
+
+import reduxWaiter, { connectWaiter, reducer } from '../src';
+import { waiterModel } from '../src/waiter-reducer';
 
 import REDUX_MOUNT_POINT from './redux-mount-point';
 
@@ -166,13 +168,14 @@ describe('(Redux Waiter) Connect Waiter', () => {
     });
   });
 
-  describe('should handle destroy', () => {
+  describe('should handle destroy and return waiterModel', () => {
+    const WAITER_NAME = 'destroyedWaiter';
     const MOCK_ERROR = {
       message: 'ERROR MESSAGE',
     };
 
     const Component = connectWaiter({
-      name: 'rejectedWaiter',
+      name: WAITER_NAME,
       requestCreator: () =>
         new Promise((resolve, reject) => {
           setTimeout(() => reject(MOCK_ERROR), 1500);
@@ -180,29 +183,17 @@ describe('(Redux Waiter) Connect Waiter', () => {
       requestOnMount: true,
     })(() => <div>Hello</div>);
 
-    it('Should not resolve or reject', async () => {
-      expect.assertions(14);
+    it.only('Should not resolve or reject', async () => {
+      expect.assertions(1);
       const wrapper = mountComponent(Component);
-      await new Promise((resolve) => setTimeout(resolve, 1600));
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      store.dispatch(reduxWaiter.actions.destroyWaiter(WAITER_NAME));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       wrapper.update();
       const { waiter } = getWaiterProps(wrapper);
-
-      expect(waiter.response).toBe(null);
-      expect(waiter.error).toBe(MOCK_ERROR);
-
-      expect(waiter.isPending).toBe(false);
-      expect(waiter.isCompleted).toBe(true);
-      expect(waiter.isResolved).toBe(false);
-      expect(waiter.isRejected).toBe(true);
-      expect(waiter.isCanceled).toBe(false);
-      expect(waiter.isRefreshing).toBe(false);
-      expect(waiter.isRetrying).toBe(false);
-
-      expect(typeof waiter.startTime).toBe('number');
-      expect(typeof waiter.lastModified).toBe('number');
-      expect(typeof waiter.endTime).toBe('number');
-      expect(typeof waiter.elapsedTime).toBe('number');
-      expect(waiter.startTime < waiter.endTime).toBe(true);
+      expect(waiter).toBe(waiterModel);
     });
   });
 
