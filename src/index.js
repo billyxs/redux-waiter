@@ -21,6 +21,8 @@ export const callWaiter = actions.callWaiter;
 export const clearWaiter = actions.clearWaiter;
 export const prepareWaiter = actions.prepareWaiter;
 export const destroyWaiter = actions.destroyWaiter;
+export const clearAll = actions.clearAll;
+export const destroyAll = actions.destroyAll;
 
 export default {
   actions,
