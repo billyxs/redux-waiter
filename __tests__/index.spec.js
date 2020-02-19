@@ -7,6 +7,8 @@ import reduxWaiter, {
   clearWaiter,
   prepareWaiter,
   destroyWaiter,
+  clearAll,
+  destroyAll,
 } from '../src';
 
 describe('(Redux Waiter)', () => {
@@ -61,6 +63,18 @@ describe('(Redux Waiter)', () => {
   describe('(Export destroyWaiter action)', () => {
     it('Should be exported as a function.', () => {
       expect(typeof destroyWaiter).toBe('function');
+    });
+  });
+
+  describe('(Export clearAll action)', () => {
+    it('Should be exported as a function.', () => {
+      expect(typeof clearAll).toBe('function');
+    });
+  });
+
+  describe('(Export destroyAll action)', () => {
+    it('Should be exported as a function.', () => {
+      expect(typeof destroyAll).toBe('function');
     });
   });
 });
