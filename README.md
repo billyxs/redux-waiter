@@ -7,7 +7,7 @@
 
 `npm i redux-waiter --save`
 
-This gives you access to the reducer, constants, actions, and selectors available
+This gives you access to the reducer, constants, actions, and selectors available.
 
 ## Add to your combineReducers()
 
@@ -97,7 +97,7 @@ const model = {
 
 `import { connectWaiter } from 'redux-waiter'`
 
-connectWaiter is a higher-order-component that connects the your waiter
+connectWaiter is a higher-order-component that connects your waiter
 promise to another component.
 You can listen in on waiter events and dispatch other actions. You can add
 custom views to different waiter states,
@@ -111,16 +111,21 @@ import MyComponent from 'path/to/MyComponent';
 import notification from 'path/to/notification';
 
 const SearchRequestForm = connectWaiter({
-  name: 'my-waiter-name',
+  // name can be a string or a function with access to props 
+  name: (props) => 'my-waiter-name',
+
+  // requestCreator, your promise builder 
   requestCreator: (params, props) => yourAPI.getSomething(params),
 
   // onMount
   onMount: (props) => {
     props.dispatch(customAction());
   },
+
+  // clear the waiter data when the component is being added to the view
   clearOnMount: true,
 
-  // request on mount options
+  // create your promise request when mounting your component
   requestOnMount: true,
 
   // pass parameters to the request creator based on props
@@ -134,6 +139,8 @@ const SearchRequestForm = connectWaiter({
   onUnmount: (waiter, props) => {
     props.dispatch(customAction());
   },
+
+  // clear the waiter data when the component is being removed from view
   clearOnUnmount: true,
 
   // state actions
@@ -178,7 +185,7 @@ dispatch(
 
 ### prepareWaiter(waiterName, { params, requestCreator })
 
-Prepare is the same as callWaiter, but it only store up params and the request
+Prepare is the same as callWaiter, but it will only store up the params and request
 creator to the waiterName. It will not invoke the requestCreator until
 callWaiter(waiterName) is dispatched
 
@@ -247,7 +254,7 @@ dispatch(destroyAll());
 
 ### getWaiter(state, waiterName)
 
-Get all the waiter data from the store by it's name.
+Get the waiter model from the store by it's name.
 
 ```javascript
 import { getWaiter } from 'redux-waiter';
@@ -259,7 +266,7 @@ import { getWaiter } from 'redux-waiter';
 ### getWaiterResponse(state, waiterName)
 
 Get only the response of the promise by the waiter name. Returns null if no
-response has been given.
+response has been set.
 
 ```javascript
 import { getWaiterResponse } from 'redux-waiter';
@@ -271,7 +278,7 @@ import { getWaiterResponse } from 'redux-waiter';
 ### getWaiterError(state, waiterName)
 
 Get only the error of the promise by the waiter name. Returns null if no error
-was given.
+has been set.
 
 ```javascript
 import { getWaiterError } from 'redux-waiter';
