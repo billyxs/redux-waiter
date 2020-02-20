@@ -17,12 +17,14 @@ export const getWaiterResponse = selectors.getWaiterResponse;
 export const getWaiterError = selectors.getWaiterError;
 
 // actions
-export const callWaiter = actions.callWaiter;
-export const clearWaiter = actions.clearWaiter;
-export const prepareWaiter = actions.prepareWaiter;
-export const destroyWaiter = actions.destroyWaiter;
-export const clearAll = actions.clearAll;
-export const destroyAll = actions.destroyAll;
+export const {
+  prepareWaiter,
+  callWaiter,
+  clearWaiter,
+  destroyWaiter,
+  clearAll,
+  destroyAll,
+} = actions;
 
 export default {
   actions,
