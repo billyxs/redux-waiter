@@ -27,6 +27,10 @@ function stash_checkout_version() {
   git checkout -b "$BRANCH_NAME" --quiet
   echo "Bumping version to $NEW_VERSION"
   npm version $VERSION_TYPE
+
+  echo "Publishing..."
+  npm publish
+
   echo "Pushing version bump and tags..."
   git push origin "$BRANCH_NAME" --quiet
   git push origin "$BRANCH_NAME" --tags --quiet
