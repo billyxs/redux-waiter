@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+PREV_BRANCH=$(git symbolic-ref HEAD --short)
 IS_DIRTY=$(git diff --ignore-submodules HEAD)
 
 VERSION_TYPE=""
@@ -31,7 +32,7 @@ function stash_checkout_version() {
   git push origin "$BRANCH_NAME" --tags --quiet
 
   # Return to branch
-  git checkout --quiet - 
+  git checkout $PREV_BRANCH --quiet
 
   # Reapply stashed changes if branch was dirty
   if [ -n "$IS_DIRTY" ]; then
