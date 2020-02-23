@@ -15,25 +15,29 @@ PATCH_VERSION=$(semver $CURR_VERSION -i patch)
 function stash_checkout_version() {
   # Stash changes if branch is dirty
   if [ -n "$IS_DIRTY" ]; then
-    echo "Current branch is dirty. Stashing changes..."
+    echo -n "Current branch is dirty. Stashing changes..."
     git stash --quiet
+    echo "Done!"
   fi
 
   # Cut release branch from master
-  echo "Checking out master and pulling latest..."
+  echo -n "Checking out master and pulling latest..."
   git checkout master --quiet
   git pull origin master --quiet
+  echo "Done!"
 
   git checkout -b "$BRANCH_NAME" --quiet
   echo "Bumping version to $NEW_VERSION"
   npm version $VERSION_TYPE
 
-  echo "Publishing..."
+  echo -n "Publishing..."
   npm publish
+  echo "Done!"
 
-  echo "Pushing version bump and tags..."
+  echo -n "Pushing version bump and tags..."
   git push origin "$BRANCH_NAME" --quiet
   git push origin "$BRANCH_NAME" --tags --quiet
+  echo "Done!"
 
   # Return to branch
   git checkout $PREV_BRANCH --quiet
