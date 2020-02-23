@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
+# Colors
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NO_COLOR='\033[0m'
+
 PREV_BRANCH=$(git symbolic-ref HEAD --short)
 IS_DIRTY=$(git diff --ignore-submodules HEAD)
+DONE_MESSAGE="${GREEN}Done!${NO_COLOR}"
 
 VERSION_TYPE=""
-VERSION_TYPE_MESSAGE="If specifying a release type argument, please provide 'major', 'minor', or 'patch'"
 
 NEW_VERSION=""
 BRANCH_NAME=""
@@ -17,13 +23,13 @@ function stash_checkout() {
   if [ -n "$IS_DIRTY" ]; then
     echo -n "Current branch is dirty. Stashing changes..."
     git stash --quiet
-    echo "Done!"
+    echo -e $DONE_MESSAGE
   fi
 
   echo -n "Checking out master and pulling latest..."
   git checkout master --quiet
   git pull origin master --quiet
-  echo "Done!"
+  echo -e $DONE_MESSAGE
 
   CURR_VERSION=$(npm run env | grep npm_package_version | cut -f 2 -d '=')
   MAJOR_VERSION=$(semver $CURR_VERSION -i major)
@@ -39,12 +45,12 @@ function publish() {
 
   echo -n "Publishing..."
   npm publish
-  echo "Done!"
+  echo -e $DONE_MESSAGE
 
   echo -n "Pushing version bump and tags..."
   git push origin "$BRANCH_NAME" --quiet
   git push origin "$BRANCH_NAME" --tags --quiet
-  echo "Done!"
+  echo -e $DONE_MESSAGE
 }
 
 function cleanup() {
@@ -72,7 +78,7 @@ function get_version() {
       NEW_VERSION=$PATCH_VERSION
       ;;
     *)
-      echo $VERSION_TYPE_MESSAGE
+      echo -e "${RED}If specifying a release type argument, please provide 'major', 'minor', or 'patch'${NO_COLOR}"
       exit
   esac
   BRANCH_NAME="release/$NEW_VERSION"
@@ -96,5 +102,5 @@ echo "Creating a $VERSION_TYPE ($NEW_VERSION) release"
 publish
 cleanup
 
-echo "Done!"
-echo "Make a PR for the branch at https://github.com/hixme/redux-waiter/pull/new/$BRANCH_NAME"
+echo -e "${GREEN}You're all done!${NO_COLOR}"
+echo -e "${GREEN}Make a PR for the branch at https://github.com/hixme/redux-waiter/pull/new/$BRANCH_NAME${NO_COLOR}"
