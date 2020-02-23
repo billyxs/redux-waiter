@@ -6,13 +6,13 @@ VERSION_TYPE=""
 VERSION_TYPE_MESSAGE="If specifying a release type argument, please provide 'major', 'minor', or 'patch'"
 
 NEW_VERSION=""
-BRANCH_NAME="release/0.0.0"
-CURR_VERSION=$(npm run env | grep npm_package_version | cut -f 2 -d '=')
-MAJOR_VERSION=$(semver $CURR_VERSION -i major)
-MINOR_VERSION=$(semver $CURR_VERSION -i minor)
-PATCH_VERSION=$(semver $CURR_VERSION -i patch)
+BRANCH_NAME=""
+CURR_VERSION=""
+MAJOR_VERSION=""
+MINOR_VERSION=""
+PATCH_VERSION=""
 
-function stash_checkout_version() {
+function stash_checkout() {
   # Stash changes if branch is dirty
   if [ -n "$IS_DIRTY" ]; then
     echo -n "Current branch is dirty. Stashing changes..."
@@ -20,13 +20,20 @@ function stash_checkout_version() {
     echo "Done!"
   fi
 
-  # Cut release branch from master
   echo -n "Checking out master and pulling latest..."
   git checkout master --quiet
   git pull origin master --quiet
   echo "Done!"
 
+  CURR_VERSION=$(npm run env | grep npm_package_version | cut -f 2 -d '=')
+  MAJOR_VERSION=$(semver $CURR_VERSION -i major)
+  MINOR_VERSION=$(semver $CURR_VERSION -i minor)
+  PATCH_VERSION=$(semver $CURR_VERSION -i patch)
+}
+
+function publish() {
   git checkout -b "$BRANCH_NAME" --quiet
+
   echo "Bumping version to $NEW_VERSION"
   npm version $VERSION_TYPE
 
@@ -38,7 +45,9 @@ function stash_checkout_version() {
   git push origin "$BRANCH_NAME" --quiet
   git push origin "$BRANCH_NAME" --tags --quiet
   echo "Done!"
+}
 
+function cleanup() {
   # Return to branch
   git checkout $PREV_BRANCH --quiet
 
@@ -69,6 +78,8 @@ function get_version() {
   BRANCH_NAME="release/$NEW_VERSION"
 }
 
+stash_checkout
+
 echo "Current package version is $CURR_VERSION"
 if [ -n "$1" ]; then
   get_version $1
@@ -82,7 +93,8 @@ else
 fi
 echo "Creating a $VERSION_TYPE ($NEW_VERSION) release"
 
-stash_checkout_version
+publish
+cleanup
 
 echo "Done!"
 echo "Make a PR for the branch at https://github.com/hixme/redux-waiter/pull/new/$BRANCH_NAME"
