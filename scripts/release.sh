@@ -48,8 +48,8 @@ function publish() {
   echo -e $DONE_MESSAGE
 
   echo -n "Pushing version bump and tags..."
-  git push origin "$BRANCH_NAME" --quiet
-  git push origin "$BRANCH_NAME" --tags --quiet
+  git push origin "$BRANCH_NAME" --quiet --no-verify
+  git push origin "$BRANCH_NAME" --tags --quiet --no-verify
   echo -e $DONE_MESSAGE
 }
 
