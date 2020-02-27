@@ -111,18 +111,34 @@ import MyComponent from 'path/to/MyComponent';
 import notification from 'path/to/notification';
 
 const SearchRequestForm = connectWaiter({
+  /* 
+   * Configuration settings 
+   */
+
   // name can be a string or a function with access to props 
   name: (props) => 'my-waiter-name',
 
   // requestCreator, your promise builder 
   requestCreator: (params, props) => yourAPI.getSomething(params),
 
+  /* 
+   * Alternate views 
+   */
+
+  pendingView: LoadingView,
+  rejectedView: FailureView,
+
+  /* 
+   * Lifecycle configs and state change callbacks
+   */
+
   // onMount
-  onMount: (props) => {
-    props.dispatch(customAction());
+  onMount: (waiter, props) => {
+    // Hey, we mounted!
+    console.log('onMount', waiter)
   },
 
-  // clear the waiter data when the component is being added to the view
+  // clear the waiter data when the component is added to the view
   clearOnMount: true,
 
   // create your promise request when mounting your component
@@ -135,33 +151,41 @@ const SearchRequestForm = connectWaiter({
   // the waiter again on props change
   requestOnPropsChange: (props) => ({ name: 'First', last: 'Last' }),
 
-  // on unmount
-  onUnmount: (waiter, props) => {
-    props.dispatch(customAction());
-  },
-
-  // clear the waiter data when the component is being removed from view
-  clearOnUnmount: true,
-
-  // state actions
+  // state change callbacks 
   onPending: (waiter, props) => {
+    // And we're off! 
     console.log('onPending - ', waiter);
-    props.dispatch(loadData(waiter.response));
   },
   onResolve: (waiter, props) => {
-    console.log('onResolve - ', waiter);
-    props.dispatch(sendError(waiter.error));
+    // Success!
+    console.log('onResolve - ', waiter.response);
   },
   onReject: (waiter, props) => {
+    // Oh no...error
     console.log('onReject - ', waiter.error);
   },
   onComplete: (waiter, props) => {
+    // All done!
     console.log('onComplete - ', waiter);
   },
+  onRefresh: (waiter, props) => {
+    // We're updating our response!
+    console.log('onRefresh - ', waiter)
+  },
+  onCancel: (waiter, props) => {
+    // The waiter canceled, do what you need to clean up 
+    console.log('onCancel - ', waiter)
+  },
 
-  // alternate views
-  pendingView: LoadingView,
-  rejectedView: FailureView,
+  // on unmount
+  onUnmount: (waiter, props) => {
+    // Say goodbye to your view! 
+    console.log('onUnmount - ', waiter);
+  },
+
+  // clear the waiter data when the component is removed from view
+  clearOnUnmount: true,
+
 })(MyComponent);
 ```
 
