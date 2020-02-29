@@ -96,7 +96,7 @@ export function callWaiter(name, { requestCreator, params }) {
     const waiterData = getWaiter(getState(), name);
 
     // Check if waiter is currently handling a request
-    if (waiterData.request && waiterData.isPending) {
+    if (waiterData.request && waiterData.request.then && waiterData.isPending) {
       return waiterData.request;
     }
 
