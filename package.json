@@ -1,6 +1,6 @@
 {
   "name": "redux-waiter",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "A promise lifecycle manager with redux",
   "repository": "https://github.com/hixme/redux-waiter",
   "main": "lib/index.js",
