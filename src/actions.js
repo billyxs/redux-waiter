@@ -111,7 +111,7 @@ export function callWaiter(name, { requestCreator, params }) {
     dispatch(initRequest(name, { request }));
     const waiterId = getWaiter(getState(), name).id;
 
-    request
+    return request
       .then((data) =>
         dispatch(
           waiterResponseHandler(name, {
@@ -130,8 +130,6 @@ export function callWaiter(name, { requestCreator, params }) {
           })
         )
       );
-
-    return request;
   };
 }
 
